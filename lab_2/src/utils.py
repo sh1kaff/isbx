@@ -2,7 +2,7 @@
 import subprocess
 
 import config.paths as paths
-from config.messages import ERRORS
+from config.messages import ERRORS, NAMES
 
 
 def valid_bits(bits: str):
@@ -25,7 +25,7 @@ def get_exec_path(lang: str) -> str:
     if lang not in paths.LANGS:
         raise ValueError(ERRORS["invalid_lang"])
 
-    path = os.path.join(paths.EXEC_DIR, f"gen_{lang}.exe")
+    path = os.path.join(paths.EXEC_DIR, NAMES["exe_file_name"].format(lang=lang))
 
     return path
 

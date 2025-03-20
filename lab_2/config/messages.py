@@ -5,3 +5,9 @@
     "invalid_path": "Path is invalid",
     "invalid_lang": "Lang is invalid"
 }
+
+
+NAMES = {
+    "exe_file_name": "gen_{lang}.exe",
+    "java_file_name": "Gen.class"
+}
