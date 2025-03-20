@@ -7,7 +7,7 @@ import config.paths as paths
 def valid_bits(bits: str):
     if len(bits) == 0:
         raise ValueError("Empty bits string")
-    
+
     if not all(c in "01" for c in bits):
         raise ValueError("Bits contains invalid character")
 
@@ -23,7 +23,7 @@ def _execute(path: str) -> str:
 def get_exec_path(lang: str) -> str:
     if lang not in paths.LANGS:
         raise ValueError("lang not valid")
-    
+
     path = os.path.join(paths.EXEC_DIR, f"gen_{lang}.exe")
 
     return path
