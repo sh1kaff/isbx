@@ -1,5 +1,5 @@
-﻿import subprocess
-import os
+﻿import os
+import subprocess
 
 import config.paths as paths
 

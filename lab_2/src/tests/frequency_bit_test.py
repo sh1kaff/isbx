@@ -17,10 +17,10 @@ def _sum_bits(bits: str) -> int:
 def frequency_bit_test(bits: str) -> float:
     valid_bits(bits)
 
-    N = len(bits)
+    seq_len = len(bits)
 
-    S_N = _sum_bits(bits) / math.sqrt(N)
+    norm_sum = _sum_bits(bits) / math.sqrt(seq_len)
 
-    P_value = math.erfc(abs(S_N) / math.sqrt(2))
+    P_value = math.erfc(abs(norm_sum) / math.sqrt(2))
 
     return P_value
