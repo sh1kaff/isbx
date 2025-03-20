@@ -1,5 +1,7 @@
 ﻿from scipy.special import gammaincc
 
+from config.messages import ERRORS
+
 
 BLOCK_SIZE = 8
 SEQ_LEN = 128
@@ -50,7 +52,7 @@ def _find_max_subseq(bits: str) -> int:
 
 def longest_run_test128(bits: str) -> float:
     if len(bits) != SEQ_LEN:
-        raise ValueError(f"Bits len is not {SEQ_LEN}")
+        raise ValueError(ERRORS["invalid_bits_len"].format(seq_len=SEQ_LEN))
 
     stats = _stats(bits)
 

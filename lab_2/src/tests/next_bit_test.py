@@ -42,7 +42,7 @@ def next_bit_test(bits: str) -> float:
 
     if sign_changes == 0:
         return 0
-    
+
     P_value = _p_value(sign_changes, seq_len, ones_ratio)
 
     return P_value
