@@ -4,10 +4,6 @@ import os
 import config.paths as paths
 
 
-def is2power(num: int) -> bool:
-    return (num & num - 1) and num != 0
-
-
 def valid_bits(bits: str):
     if len(bits) == 0:
         raise ValueError("Empty bits string")
