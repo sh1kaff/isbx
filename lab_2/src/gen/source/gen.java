@@ -13,4 +13,3 @@ public class Gen
 
         for (byte b : bytes) System.out.print(toBitString(b));
     }
-}
