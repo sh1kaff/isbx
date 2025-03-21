@@ -45,6 +45,4 @@ def next_bit_test(bits: str) -> float:
 
     P_value = _p_value(sign_changes, seq_len, ones_ratio)
 
-    print(f"{seq_len=}\n{ones_ratio=}\n{sign_changes=}\n{P_value=}")
-
     return P_value

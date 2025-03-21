@@ -11,3 +11,10 @@ NAMES = {
     "exe_file_name": "gen_{lang}.exe",
     "java_file_name": "Gen.class"
 }
+
+
+MESSAGES = {
+    "bits_result": "Generated bits string: {bits}",
+    "test_result": "Result of {test} test: P_value = {result}",
+    "status": "Status: {status}"
+}

@@ -3,6 +3,7 @@
 from src.utils import get_bits
 from src.tests.tests import route_test
 
+
 app = Flask(__name__)
 
 

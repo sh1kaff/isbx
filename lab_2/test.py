@@ -1,5 +1,6 @@
 ﻿import argparse
 
+from config.messages import MESSAGES
 from src.tests.tests import route_test
 from src.utils import get_bits
 
@@ -21,7 +22,11 @@ def main():
 
     result = route_test(args.test, bits)
 
-    print(result)
+    status = "Passed" if result >= 0.01 and result <= 1 else "Failed"
+
+    print(MESSAGES["bits_result"].format(bits=bits))
+    print(MESSAGES["test_result"].format(test=args.test, result=result))
+    print(MESSAGES["status"].format(status=status))
 
 
 if __name__ == "__main__":
