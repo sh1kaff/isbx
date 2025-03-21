@@ -32,14 +32,20 @@
     margin: 10px;
 }
 
-/* #gen-bits-area {
-    height: 100px;
-    width: 250px;
-} */
-
 #gen-bits-button,
 #test-bits-button {
     height: 50px;
     width: 250px;
 }
 
+#results {
+    text-align: center;
+}
+
+#status.passed {
+    background-color: greenyellow;
+}
+
+#status.failed {
+    background-color: red;
+}

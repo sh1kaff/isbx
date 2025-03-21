@@ -22,6 +22,9 @@ def _stop_criterion(ones_ratio: int, seq_len: int) -> bool:
 def _p_value(sign_changes: float, seq_len: int, ones_ratio: float) -> float:
     prob_variance = ones_ratio * (1 - ones_ratio)
 
+    if prob_variance == 0:
+        return 0
+
     up = abs(sign_changes - 2 * seq_len * prob_variance)
     down = 2 * math.sqrt(2 * seq_len) * prob_variance
 
@@ -39,9 +42,6 @@ def next_bit_test(bits: str) -> float:
         return 0
 
     sign_changes = _sign_changes(bits)
-
-    if sign_changes == 0:
-        return 0
 
     P_value = _p_value(sign_changes, seq_len, ones_ratio)
 

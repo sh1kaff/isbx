@@ -13,7 +13,12 @@
     <div id="block">
 
         <div id="gen-form">
-            <textarea id="gen-bits-area"></textarea>
+            <textarea id="gen-bits-area" required></textarea>
+            <div>
+                <label>Bits count:</label>
+                <span id="gen-bits-area-counter">0</span>
+            </div>
+
             
             <div id="gen-bits-form">
                 <select id="gen-bits-langs" class="custom-select">
@@ -24,6 +29,7 @@
                 <div id="gen-error"></div>
             </div>
             
+
             <div id="test-bits-form">
                 <div id="test-error"></div>
                 <select id="test-bits-tests" class="custom-select">
@@ -35,7 +41,11 @@
             </div>
         </div>
 
-        <div id="result"></div>
+        
+        <div id="results">
+            <p id="result"></p>
+            <p id="status" class=""></p>
+        </div>
 
     </div>
 
