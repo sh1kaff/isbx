@@ -4,6 +4,14 @@ from src.utils import valid_bits
 
 
 def _sign_changes(bits: str) -> int:
+    """Counts the number of bit changes in a bit string
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        int: sign changes count
+    """
     seq_len = len(bits)
 
     sign_changes = 1
@@ -15,11 +23,30 @@ def _sign_changes(bits: str) -> int:
 
 
 def _stop_criterion(ones_ratio: int, seq_len: int) -> bool:
+    """Exit condition from the test
+
+    Args:
+        ones_ratio (int): percentage of ones in a bit string
+        seq_len (int): bits count
+
+    Returns:
+        bool: whether the stop condition has been triggered or not
+    """
     condition = abs(ones_ratio - 0.5) < 2 / math.sqrt(seq_len)
     return not condition
 
 
 def _p_value(sign_changes: float, seq_len: int, ones_ratio: float) -> float:
+    """Calculating the P value for a test
+
+    Args:
+        sign_changes (float): sign changes count
+        seq_len (int): bits count
+        ones_ratio (float): percentage of ones in a bit string
+
+    Returns:
+        float: test result
+    """
     prob_variance = ones_ratio * (1 - ones_ratio)
 
     if prob_variance == 0:
@@ -32,6 +59,14 @@ def _p_value(sign_changes: float, seq_len: int, ones_ratio: float) -> float:
 
 
 def next_bit_test(bits: str) -> float:
+    """Main function for the next-bit test
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        float: test result
+    """
     valid_bits(bits)
 
     seq_len = len(bits)

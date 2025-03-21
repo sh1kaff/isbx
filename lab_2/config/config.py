@@ -11,6 +11,13 @@ LANGS = [
 ]
 
 
+TESTS = [
+    "freq_bit",
+    "long_run",
+    "next_bit"
+]
+
+
 EXEC_DIR = os.path.join(
     ROOT_DIR,
     "src",

@@ -4,6 +4,14 @@ from src.utils import valid_bits
 
 
 def _sum_bits(bits: str) -> int:
+    """Adds bits, with 0 being -1
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        int: result sum
+    """
     bits_sum = 0
     for bit in bits:
         if bit == "1":
@@ -15,6 +23,14 @@ def _sum_bits(bits: str) -> int:
 
 
 def frequency_bit_test(bits: str) -> float:
+    """The main function for the frequency bit test
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        float: test result
+    """
     valid_bits(bits)
 
     seq_len = len(bits)

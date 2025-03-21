@@ -9,11 +9,13 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def index_handler():
+    """Index Page"""
     return render_template("index.html")
 
 
 @app.route("/gen/<lang>", methods=["GET"])
 def gen_handler(lang):
+    """Handler for generate bits string"""
     try:
         bits = get_bits(lang)
     except Exception as e:
@@ -24,6 +26,7 @@ def gen_handler(lang):
 
 @app.route("/test", methods=["POST"])
 def test_handler():
+    """Handler for test bits string with NIST"""
     try:
         data = request.get_json()
 

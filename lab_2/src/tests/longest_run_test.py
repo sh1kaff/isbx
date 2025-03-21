@@ -5,6 +5,21 @@ from config.messages import ERRORS
 
 
 def _stats(bits: str) -> list:
+    """Gets statistics on the longest
+        subsequences of ones in bit blocks:
+    [
+        v1: <= 1
+        v2: == 2
+        v3: == 3
+        v4: >= 4
+    ]
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        list: list of length 4, consisting of 4 statistical units
+    """
     seq_len = LONGEST_RUN_CONSTS["SEQ_LEN"]
     block_size = LONGEST_RUN_CONSTS["BLOCK_SIZE"]
 
@@ -27,6 +42,15 @@ def _stats(bits: str) -> list:
 
 
 def _chi_square(stats: list) -> float:
+    """Calculating chi square
+
+    Args:
+        stats (list): statistics with distribution
+            of the number of ones in the block
+
+    Returns:
+        float: chi square
+    """
     num_blocks = LONGEST_RUN_CONSTS["NUM_BLOCKS"]
     pi_constants = LONGEST_RUN_CONSTS["PI_CONSTANTS"]
 
@@ -39,6 +63,14 @@ def _chi_square(stats: list) -> float:
 
 
 def _find_max_subseq(bits: str) -> int:
+    """Searches for the maximum subsequence of units in the block
+
+    Args:
+        bits (str): bits string
+
+    Returns:
+        int: max ones count
+    """
     max_subseq = 0
 
     subseq = 0
@@ -53,10 +85,21 @@ def _find_max_subseq(bits: str) -> int:
 
 
 def longest_run_test128(bits: str) -> float:
+    """Main function of the test
+
+    Args:
+        bits (str): bits string
+
+    Raises:
+        ValueError: The length of the bit string is not 128
+
+    Returns:
+        float: test result
+    """
     seq_len = LONGEST_RUN_CONSTS["SEQ_LEN"]
 
     if len(bits) != seq_len:
-        raise ValueError(ERRORS["invalid_bits_len"].format(seq_len=seq_len))
+        raise ValueError(ERRORS["invalid_bits_len"])
 
     stats = _stats(bits)
 
