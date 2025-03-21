@@ -1,7 +1,7 @@
 ﻿import os
 import subprocess
 
-import config.paths as paths
+from config import config
 from config.messages import ERRORS, NAMES
 
 
@@ -22,10 +22,10 @@ def _execute(path: str) -> str:
 
 
 def get_exec_path(lang: str) -> str:
-    if lang not in paths.LANGS:
+    if lang not in config.LANGS:
         raise ValueError(ERRORS["invalid_lang"])
 
-    path = os.path.join(paths.EXEC_DIR, NAMES["exe_file_name"].format(lang=lang))
+    path = os.path.join(config.EXEC_DIR, NAMES["exe_file_name"].format(lang=lang))
 
     return path
 
@@ -34,3 +34,4 @@ def get_bits(lang: str) -> str:
     path = get_exec_path(lang)
 
     return _execute(path)
+

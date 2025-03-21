@@ -1,7 +1,7 @@
 ﻿from flask import Flask, jsonify, render_template, request
 
-from src.web.route_test import route_test
 from src.utils import get_bits
+from src.tests.tests import route_test
 
 app = Flask(__name__)
 

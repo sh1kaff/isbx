@@ -1,18 +1,17 @@
 ﻿from scipy.special import gammaincc
 
+from config.constants import LONGEST_RUN_CONSTS
 from config.messages import ERRORS
 
 
-BLOCK_SIZE = 8
-SEQ_LEN = 128
-NUM_BLOCKS = SEQ_LEN // BLOCK_SIZE
-PI_CONSTANTS = [0.2148, 0.3672, 0.2305, 0.1875]
-
-
 def _stats(bits: str) -> list:
+    seq_len = LONGEST_RUN_CONSTS["SEQ_LEN"]
+    block_size = LONGEST_RUN_CONSTS["BLOCK_SIZE"]
+
     stats = [0] * 4
-    for i in range(0, SEQ_LEN, BLOCK_SIZE):
-        block = bits[i:i + BLOCK_SIZE]
+
+    for i in range(0, seq_len, block_size):
+        block = bits[i:i + block_size]
         max_subseq = _find_max_subseq(block)
 
         if max_subseq <= 1:
@@ -28,10 +27,13 @@ def _stats(bits: str) -> list:
 
 
 def _chi_square(stats: list) -> float:
+    num_blocks = LONGEST_RUN_CONSTS["NUM_BLOCKS"]
+    pi_constants = LONGEST_RUN_CONSTS["PI_CONSTANTS"]
+
     chi_square = 0
 
-    for v, pi in zip(stats, PI_CONSTANTS):
-        chi_square += (v - NUM_BLOCKS * pi) ** 2 / (NUM_BLOCKS * pi)
+    for v, pi in zip(stats, pi_constants):
+        chi_square += (v - num_blocks * pi) ** 2 / (num_blocks * pi)
 
     return chi_square
 
@@ -51,8 +53,10 @@ def _find_max_subseq(bits: str) -> int:
 
 
 def longest_run_test128(bits: str) -> float:
-    if len(bits) != SEQ_LEN:
-        raise ValueError(ERRORS["invalid_bits_len"].format(seq_len=SEQ_LEN))
+    seq_len = LONGEST_RUN_CONSTS["SEQ_LEN"]
+
+    if len(bits) != seq_len:
+        raise ValueError(ERRORS["invalid_bits_len"].format(seq_len=seq_len))
 
     stats = _stats(bits)
 

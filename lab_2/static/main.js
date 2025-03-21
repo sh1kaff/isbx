@@ -23,6 +23,11 @@ document.querySelector("#gen-bits-button").addEventListener("click", async () =>
     let response = await genBits(lang);
     let counter = document.querySelector("#gen-bits-area-counter");
 
+    let test_error_tag = document.querySelector("#test-error");
+    let test_result_tag = document.querySelector("#result");
+    let test_status_tag = document.querySelector("#status");
+
+
     let error_tag = document.querySelector("#test-error");
     if (response.error) {
         error_tag.textContent = `Error: ${response.error}`;
@@ -32,6 +37,11 @@ document.querySelector("#gen-bits-button").addEventListener("click", async () =>
         counter.textContent = response.bits.length;
         error_tag.textContent = "";
     }
+
+    test_error_tag.textContent = "";
+    test_result_tag.textContent = "";
+    test_status_tag.textContent = "";
+
 });
 
 

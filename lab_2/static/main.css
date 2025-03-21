@@ -1,5 +1,8 @@
 ﻿body {
     background-color: aliceblue;
+    font-family: din-round, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 #block {
