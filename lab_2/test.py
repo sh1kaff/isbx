@@ -40,6 +40,7 @@ def main():
 
     bits = get_bits(args.gen_lang)
 
+    print(MESSAGES["what_lang"].format(lang=args.gen_lang))
     print(MESSAGES["bits_result"].format(bits=bits), end="\n\n")
 
     if not args.tests:

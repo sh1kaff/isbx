@@ -15,6 +15,7 @@ NAMES = {
 
 
 MESSAGES = {
+    "what_lang": "Lang for generating: {lang}",
     "bits_result": "Generated bits string: {bits}",
     "test_result": "Result of {test} test: P_value = {result}",
     "status": "Status: {status}"
