@@ -1,9 +1,9 @@
-﻿from src.tests.frequency_bit_test import frequency_bit_test
+﻿from config.messages import ERRORS
+from config.config import TESTS
+
+from src.tests.frequency_bit_test import frequency_bit_test
 from src.tests.longest_run_test import longest_run_test128
 from src.tests.next_bit_test import next_bit_test
-
-from config.messages import ERRORS
-from config.config import TESTS
 
 
 def route_test(test: str, bits: str) -> float:
