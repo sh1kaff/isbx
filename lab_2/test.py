@@ -1,25 +1,28 @@
-﻿from src.utils import get_bits
-from src.tests.frequency_bit_test import frequency_bit_test
-from src.tests.next_bit_test import next_bit_test
-from src.tests.longest_run_test import longest_run_test128
+﻿import argparse
+
+from src.tests.tests import route_test
+from src.utils import get_bits
+
+def parse_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="Gen'n'Test"
+    )
+
+    parser.add_argument("gen_lang", choices=["cpp", "java"])
+    parser.add_argument("test", choices=["freq_bit", "long_run", "next_bit"])
+
+    return parser.parse_args()
+    
 
 def main():
-    bits = get_bits("cpp")
-    print(bits)
+    args = parse_arguments()
 
-    print(
-        frequency_bit_test(bits)
-    )
+    bits = get_bits(args.gen_lang)
 
-    print(
-        next_bit_test(bits)
-    )
+    result = route_test(args.test, bits)
 
-    print(
-        longest_run_test128(bits)
-    )
+    print(result)
 
-    
 
 if __name__ == "__main__":
     try:
