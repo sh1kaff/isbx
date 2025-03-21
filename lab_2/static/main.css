@@ -1,3 +1,45 @@
 ﻿body {
-    background-color: aquamarine;
+    background-color: aliceblue;
 }
+
+#block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gen-form,
+#result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gen-bits-form,
+#test-bits-form {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+#gen-bits-form > *,
+#test-bits-form > * {
+    margin: 10px;
+}
+
+#gen-form > * {
+    margin: 10px;
+}
+
+/* #gen-bits-area {
+    height: 100px;
+    width: 250px;
+} */
+
+#gen-bits-button,
+#test-bits-button {
+    height: 50px;
+    width: 250px;
+}
+

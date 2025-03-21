@@ -6,9 +6,39 @@
     <title>Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='main.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='adv.css') }}">
 </head>
 <body>
-    
+
+    <div id="block">
+
+        <div id="gen-form">
+            <textarea id="gen-bits-area"></textarea>
+            
+            <div id="gen-bits-form">
+                <select id="gen-bits-langs" class="custom-select">
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                </select>
+                <button id="gen-bits-button" class="button-duolingo">Generate</button>
+                <div id="gen-error"></div>
+            </div>
+            
+            <div id="test-bits-form">
+                <div id="test-error"></div>
+                <select id="test-bits-tests" class="custom-select">
+                    <option value="freq_bit">Frequency (Monobit) Test</option>
+                    <option value="long_run">Longest Run Of Ones Test</option>
+                    <option value="next_bit">Next Bit (Runs) Test</option>
+                </select>
+                <button id="test-bits-button" class="button-duolingo">Test</button>
+            </div>
+        </div>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
