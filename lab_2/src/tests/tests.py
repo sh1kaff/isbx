@@ -19,12 +19,11 @@ def route_test(test: str, bits: str) -> float:
     Returns:
         float: test result
     """
-    if test == TESTS[0]:
-        test_func = frequency_bit_test
-    elif test == TESTS[1]:
-        test_func = longest_run_test128
-    elif test == TESTS[2]:
-        test_func = next_bit_test
+    test_funcs = (frequency_bit_test, longest_run_test128, next_bit_test)
+    
+    test2func = {test_key: test_func for test_key, test_func in zip(TESTS, test_funcs)}
+
+    test_func = test2func.get(test)
 
     if not test_func:
         raise ValueError(ERRORS["invalid_test"].format(test=test))
