@@ -14,10 +14,11 @@ def _sum_bits(bits: str) -> int:
     """
     bits_sum = 0
     for bit in bits:
-        if bit == "1":
-            bits_sum += 1
-        else:
-            bits_sum -= 1
+        match bit:
+            case "1":
+                bits_sum += 1
+            case _:
+                bits_sum -= 1
 
     return bits_sum
 

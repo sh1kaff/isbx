@@ -19,9 +19,17 @@ def route_test(test: str, bits: str) -> float:
     Returns:
         float: test result
     """
-    test_funcs = (frequency_bit_test, longest_run_test128, next_bit_test)
-    
-    test2func = {test_key: test_func for test_key, test_func in zip(TESTS, test_funcs)}
+    test_funcs = (
+        frequency_bit_test,
+        longest_run_test128,
+        next_bit_test
+    )
+
+    test2func = {
+        test_key: test_func
+        for test_key, test_func
+        in zip(TESTS, test_funcs)
+    }
 
     test_func = test2func.get(test)
 
