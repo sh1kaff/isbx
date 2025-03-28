@@ -29,14 +29,15 @@ def _stats(bits: str) -> list:
         block = bits[i:i + block_size]
         max_subseq = _find_max_subseq(block)
 
-        if max_subseq <= 1:
-            stats[0] += 1
-        elif max_subseq == 2:
-            stats[1] += 1
-        elif max_subseq == 3:
-            stats[2] += 1
-        else:
-            stats[3] += 1
+        match max_subseq:
+            case x if x <= 1:
+                stats[0] += 1
+            case 2:
+                stats[1] += 1
+            case 3:
+                stats[2] += 1
+            case _:
+                stats[3] += 1
 
     return stats
 
