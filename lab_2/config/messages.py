@@ -1,4 +1,4 @@
-﻿ERRORS = {
+ERRORS = {
     "empty_bit_string": "Bit string is empty",
     "invalid_bits_len": "The length of the bit string should be 128",
     "invalid_char_in_bits": "The string should only consist of '0' and '1'",

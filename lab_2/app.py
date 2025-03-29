@@ -1,4 +1,4 @@
-﻿from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request
 
 from src.utils import get_bits
 from src.tests.tests import route_test

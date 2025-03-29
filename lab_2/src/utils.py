@@ -1,4 +1,4 @@
-﻿import os
+import os
 import subprocess
 
 from config.config import EXEC_DIR, LANGS

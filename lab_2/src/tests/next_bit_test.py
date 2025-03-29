@@ -1,4 +1,4 @@
-﻿import math
+import math
 
 from src.utils import valid_bits
 

@@ -1,4 +1,4 @@
-﻿from config.messages import ERRORS
+from config.messages import ERRORS
 from config.config import TESTS
 
 from src.tests.frequency_bit_test import frequency_bit_test

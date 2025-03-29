@@ -1,4 +1,4 @@
-﻿from scipy.special import gammaincc
+from scipy.special import gammaincc
 
 from config.constants import LONGEST_RUN_CONSTS
 from config.messages import ERRORS
@@ -105,6 +105,8 @@ def longest_run_test128(bits: str) -> float:
     stats = _stats(bits)
 
     chi_square = _chi_square(stats)
+
+    print(1.5, chi_square / 2)
 
     P_value = gammaincc(1.5, chi_square / 2)
 
