@@ -14,7 +14,7 @@ def _sign_changes(bits: str) -> int:
     """
     seq_len = len(bits)
 
-    sign_changes = 1
+    sign_changes = 0
     for i in range(0, seq_len - 1):
         if bits[i] != bits[i + 1]:
             sign_changes += 1
@@ -76,8 +76,8 @@ def next_bit_test(bits: str) -> float:
     if _stop_criterion(ones_ratio, seq_len):
         return 0
 
-    sign_changes = _sign_changes(bits)
+    runs_count = _sign_changes(bits) + 1
 
-    P_value = _p_value(sign_changes, seq_len, ones_ratio)
+    P_value = _p_value(runs_count, seq_len, ones_ratio)
 
     return P_value

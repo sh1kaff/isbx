@@ -106,8 +106,6 @@ def longest_run_test128(bits: str) -> float:
 
     chi_square = _chi_square(stats)
 
-    print(1.5, chi_square / 2)
-
     P_value = gammaincc(1.5, chi_square / 2)
 
     return P_value
