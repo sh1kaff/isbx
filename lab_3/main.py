@@ -7,7 +7,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 
 # https://elc.github.io/python-security/chapters/06_Symmetric_Encryption.html
 
-key = secrets.token_bytes(5)
+key = secrets.token_bytes(7)
 iv = secrets.token_bytes(8)
 
 cipher = Cipher(
