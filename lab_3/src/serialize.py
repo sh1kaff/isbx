@@ -9,12 +9,12 @@ from src.utils import (
 from config.crypto_globals import CAST5_ENCRYPTED_SERIALIZATION_HEADERS
 
 
-def serialize_cast5_encrypted_key(key: bytes, filepath: str):
+def serialize_cast5_encrypted_key(encrypted_key: bytes, filepath: str):
     headers = CAST5_ENCRYPTED_SERIALIZATION_HEADERS
 
     content = (
         headers["start"] +
-        base64.encodebytes(key) +
+        base64.encodebytes(encrypted_key) +
         headers["end"]
     )
 
@@ -29,7 +29,10 @@ def deserialize_cast5_encrypted_key(filepath: str) -> bytes:
     if not content.startswith(headers["start"]) or not content.endswith(headers["end"]):
         raise ValueError("Unsupported file format")
     
-    return content
+    encoded_encrypted_key = b"".join(content.split(b"\n")[1:-2])
+    encrypted_key = base64.decodebytes(encoded_encrypted_key)
+
+    return encrypted_key
 
 
 def serialize_rsa_private_key(private_key: RSAPrivateKey, filepath: str):
