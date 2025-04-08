@@ -1,7 +1,35 @@
-﻿from cryptography.hazmat.primitives import serialization
+﻿import base64
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 
-from src.utils import read_bytes, write_bytes
+from src.utils import (
+    read_bytes,
+    write_bytes,
+)
+from config.crypto_globals import CAST5_ENCRYPTED_SERIALIZATION_HEADERS
+
+
+def serialize_cast5_encrypted_key(key: bytes, filepath: str):
+    headers = CAST5_ENCRYPTED_SERIALIZATION_HEADERS
+
+    content = (
+        headers["start"] +
+        base64.encodebytes(key) +
+        headers["end"]
+    )
+
+    write_bytes(filepath, content)
+
+
+def deserialize_cast5_encrypted_key(filepath: str) -> bytes:
+    headers = CAST5_ENCRYPTED_SERIALIZATION_HEADERS
+
+    content = read_bytes(filepath)
+
+    if not content.startswith(headers["start"]) or not content.endswith(headers["end"]):
+        raise ValueError("Unsupported file format")
+    
+    return content
 
 
 def serialize_rsa_private_key(private_key: RSAPrivateKey, filepath: str):
