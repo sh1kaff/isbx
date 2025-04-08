@@ -1,34 +1,18 @@
-﻿import secrets
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.decrepit.ciphers.algorithms import CAST5
-from cryptography.hazmat.primitives import padding
+﻿from src.generate import gen_rsa_keys_pair
+from src.serialize import serialize_rsa_private_key
+from src.encrypt import rsa_encrypt_text
+from src.decrypt import rsa_decrypt_text
 
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+def main():
+    pair = gen_rsa_keys_pair()
 
-# https://elc.github.io/python-security/chapters/06_Symmetric_Encryption.html
+    text = bytes("hello man", encoding="UTF-8")
 
-key = secrets.token_bytes(7)
-iv = secrets.token_bytes(8)
+    e = rsa_encrypt_text(pair["public"], text)
+    d = rsa_decrypt_text(pair["private"], e)
+    print(e, "\n", d)
+    # serialize_rsa_private_key(pair["private"], "test/asd.pem")
 
-cipher = Cipher(
-    CAST5(key),
-    modes.CBC(iv)
-)
 
-encryptor = cipher.encryptor()
-# padder = padding.PKCS7(128).padder()
-
-data = b"Hey my boy#$%^&*"
-# padded_data = padder.update(data) + padder.finalize()
-
-ciphertext = encryptor.update(data) + encryptor.finalize()
-
-print(ciphertext)
-
-decryptor = cipher.decryptor()
-# unpadder = padding.PKCS7(128).unpadder()
-
-decrypted_data = decryptor.update(ciphertext) + decryptor.finalize()
-# unpadded_data = unpadder.update(decrypted_data) + unpadder.finalize()
-
-print(decrypted_data)
+if __name__ == "__main__":
+    main()
