@@ -12,7 +12,7 @@ def gen_cast5_key(bit_len: int) -> bytes:
     return token_bytes(bit_len * 8)
 
 
-def gen_rsa_keys_pair(bit_len: int = 2048, public_exponent: int = 65537) -> dict:
+def gen_rsa_key_pair(bit_len: int = 2048, public_exponent: int = 65537) -> dict:
     private_key = rsa.generate_private_key(
         key_size=bit_len,
         public_exponent=public_exponent
