@@ -16,3 +16,8 @@ def valid_cast5_key_length(bit_len: int):
 
     if bit_len % 8 != 0:
         raise ValueError("The key length should be in 8 bit increments")
+
+
+def valid_cast5_key(key: bytes):
+    bit_len = len(key) * 8
+    valid_cast5_key_length(bit_len)
