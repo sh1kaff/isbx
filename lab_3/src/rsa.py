@@ -1,98 +1,48 @@
-﻿from cryptography.hazmat.primitives import serialization
-import cryptography.hazmat.primitives.asymmetric as asymmetric
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey, RSAPrivateKey
-
-from src.utils import (
-    read_bytes,
-    write_bytes,
-    valid_cast5_key
+﻿from src.atomic.generate import gen_rsa_key_pair
+from src.atomic.encrypt import rsa_encrypt_content
+from src.atomic.decrypt import rsa_decrypt_content
+from src.atomic.serialize import (
+    serialize_rsa_public_key,
+    serialize_rsa_private_key,
+    deserialize_rsa_public_key,
+    deserialize_rsa_private_key
 )
 
-from config.crypto_globals import PADDING 
+
+class RSA:
+    def __init__(self):
+        key_pair = gen_rsa_key_pair()
+        self.public_key = key_pair["public"]
+        self.private_key = key_pair["private"]
 
 
-def gen_rsa_key_pair(bit_len: int = 2048, public_exponent: int = 65537) -> dict:
-    private_key = asymmetric.rsa.generate_private_key(
-        key_size=bit_len,
-        public_exponent=public_exponent
-    )
-
-    public_key = private_key.public_key()
-    
-    return {
-        "public": public_key,
-        "private": private_key
-    }
+    def encrypt(self, content: bytes) -> bytes:
+        return rsa_encrypt_content(self.public_key, content)
 
 
-def rsa_encrypt_content(public_key: RSAPublicKey, content: bytes) -> bytes:
-    return public_key.encrypt(
-        plaintext=content,
-        padding=PADDING
-    )
+    def decrypt(self, encrypted_content: bytes) -> bytes:
+        return rsa_decrypt_content(self.private_key, encrypted_content)
 
 
-def rsa_encrypt_cast5_key(public_key: RSAPublicKey, cast5_key: bytes) -> bytes:
-    valid_cast5_key(cast5_key)
+    def serialize(self, key_type: str, filepath: str):
+        match key_type:
+            case "public":
+                serialize_rsa_public_key(self.public_key, filepath)
 
-    encrypted_cast5_key = rsa_encrypt_content(public_key, cast5_key)
+            case "private":
+                serialize_rsa_private_key(self.private_key, filepath)
 
-    return encrypted_cast5_key
-
-
-def rsa_decrypt_content(private_key: RSAPrivateKey, encrypted_content: bytes) -> bytes:
-    return private_key.decrypt(
-        ciphertext=encrypted_content,
-        padding=PADDING
-    )
+            case _:
+                raise ValueError(f"Unsupported key type: {key_type} (only 'public' or 'private')")
 
 
-def rsa_decrypt_cast5_key(rsa_private_key: RSAPrivateKey, encrypted_cast5_key: bytes) -> bytes:
-    cast5_key = rsa_decrypt_content(rsa_private_key, encrypted_cast5_key)
-    
-    valid_cast5_key(cast5_key)
+    def deserialize(self, key_type: str, filepath: str) -> bytes:
+        match key_type:
+            case "public":
+                return deserialize_rsa_public_key(filepath)
 
-    return cast5_key
+            case "private":
+                return deserialize_rsa_private_key(filepath)
 
-
-def serialize_rsa_private_key(private_key: RSAPrivateKey, filepath: str):
-    pem_content = private_key.private_bytes(
-        encoding=serialization.Encoding.PEM,
-        format=serialization.PrivateFormat.PKCS8,
-        encryption_algorithm=serialization.NoEncryption()
-    )
-
-    write_bytes(filepath, pem_content)
-
-
-def deserialize_rsa_private_key(
-    filepath: str,
-    password: bytes | None = None
-) -> RSAPrivateKey:
-    pem_content = read_bytes(filepath)
-
-    private_key = serialization.load_pem_private_key(
-        data=pem_content,
-        password=password
-    )
-
-    return private_key
-
-
-def serialize_rsa_public_key(public_key: RSAPublicKey, filepath: str):
-    pem_content = public_key.public_bytes(
-        encoding=serialization.Encoding.PEM,
-        format=serialization.PublicFormat.SubjectPublicKeyInfo
-    )
-
-    write_bytes(filepath, pem_content)
-
-
-def deserialize_rsa_public_key(filepath: str) -> RSAPublicKey:
-    pem_content = read_bytes(filepath)
-
-    public_key = serialization.load_pem_public_key(
-        data=pem_content
-    )
-
-    return public_key
+            case _:
+                raise ValueError(f"Unsupported key type: {key_type} (only 'public' or 'private')")

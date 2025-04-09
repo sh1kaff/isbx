@@ -1,37 +1,15 @@
-﻿from test_old.generate import (
-    gen_rsa_key_pair,
-    gen_cast5_key
-)
-from test_old.serialize import (
-    deserialize_rsa_private_key,
-    serialize_rsa_private_key,
-    serialize_cast5_encrypted_key,
-    deserialize_cast5_encrypted_key
-)
-from test_old.encrypt import (
-    rsa_encrypt_content,
-    rsa_encrypt_cast5_key
-)
-from test_old.decrypt import (
-    rsa_decrypt_content,
-    rsa_decrypt_cast5_key
-)
+﻿from src.cast5 import CAST5
 
 
 def main():
-    cast5_key = gen_cast5_key(128)
-    rsa_pair = gen_rsa_key_pair()
+    cipher = CAST5(40)
 
-    encrypted_cast5_key = rsa_encrypt_cast5_key(rsa_pair["public"], cast5_key)
+    data = b"hello world"
 
-    serialize_cast5_encrypted_key(encrypted_cast5_key, "test/cast5.txt")
-    
-    encrypted_cast5_key2 = deserialize_cast5_encrypted_key("test/cast5.txt")
+    e_d = cipher.encrypt(data)
+    d_d = cipher.decrypt(e_d)
 
-    cast5_key2 = rsa_decrypt_cast5_key(rsa_pair["private"], encrypted_cast5_key2)
-
-    print(cast5_key)
-    print(cast5_key2)
+    print(e_d, "\n", d_d, sep="")
 
 
 if __name__ == "__main__":

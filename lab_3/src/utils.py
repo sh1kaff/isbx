@@ -21,3 +21,10 @@ def valid_cast5_key_length(bit_len: int):
 def valid_cast5_key(key: bytes):
     bit_len = len(key) * 8
     valid_cast5_key_length(bit_len)
+
+
+def pem_headers(title: str) -> dict:
+    return {
+        "start": bytes(f"-----BEGIN {title}-----\n", encoding="UTF-8"),
+        "end": bytes(f"-----END {title}-----\n", encoding="UTF-8")
+    }
