@@ -41,7 +41,8 @@ class RSA:
                 raise ValueError(f"Unsupported key type: {key_type} (only 'public' or 'private')")
 
 
-    def deserialize(self, key_type: str, filepath: str) -> bytes:
+    @staticmethod
+    def deserialize(key_type: str, filepath: str) -> RSAPrivateKey | RSAPublicKey:
         match key_type:
             case "public":
                 return deserialize_rsa_public_key(filepath)
