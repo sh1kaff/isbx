@@ -1,15 +1,24 @@
-﻿from src.cast5 import CAST5
-from src.rsa import RSA
+﻿import argparse
+
+from src.atomic.rsa import RSA
+from src.atomic.cast5 import CAST5
+
+
+def get_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="",
+        description=""
+    )
+
+    parser.add_argument("--generate", "-g", help="")
+    parser.add_argument("--encrypt", "-e", help="")
+    parser.add_argument("--decrypt", "-d", help="")
+
+    return parser.parse_args()
 
 
 def main():
-    cipher = RSA()
-    
-    data = b"hello man"
-    c_d = cipher.encrypt(data)
-    d_d = cipher.decrypt(c_d)
 
-    print(c_d, "\n", d_d, sep="")
 
 if __name__ == "__main__":
     main()

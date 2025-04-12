@@ -50,5 +50,3 @@ def cast5_decrypt_content(key: bytes, encrypted_padded_content: bytes) -> bytes:
     content = unpadder.update(padded_content) + unpadder.finalize()
 
     return content
-
-
