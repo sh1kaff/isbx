@@ -1,13 +1,43 @@
 ﻿import base64
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey, RSAPrivateKey
 
+
 from src.atomic.rsa import rsa_encrypt_content, rsa_decrypt_content
+from src.atomic.rsa import RSA
+from src.atomic.cast5 import CAST5
 from src.utils import (
     read_bytes,
     write_bytes,
     valid_cast5_key
 )
 from config.crypto_globals import CAST5_ENCRYPTED_SERIALIZATION_HEADERS
+
+
+class HybridCryptoSystem:
+    def __init__(
+        self,
+        cast5: CAST5 | None = None,
+        rsa: RSA | None = None
+    ):
+        self.cast5 = cast5 or CAST5()
+        self.rsa = rsa or RSA() 
+
+
+    def encrypt_cast5_key(self) -> bytes:
+        return rsa_encrypt_cast5_key(self.rsa.public_key, self.cast5.key)
+    
+
+    def decrypt_cast5_key(self, encrypted_cast5_key: bytes) -> bytes:
+        return rsa_decrypt_cast5_key(self.rsa.rsa_private_key, encrypted_cast5_key)
+
+
+    def serialize_cast5_encrypted_key(self, filepath: str):
+        cast5_encrypted_key = self.encrypt_cast5_key() 
+        serialize_cast5_encrypted_key(cast5_encrypted_key, filepath)
+    
+
+    def deserialize_cast5_encrypted_key(self, filepath: str) -> bytes:
+        return deserialize_cast5_encrypted_key(filepath)
 
 
 def rsa_encrypt_cast5_key(public_key: RSAPublicKey, cast5_key: bytes) -> bytes:

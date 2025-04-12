@@ -2,12 +2,17 @@
 from cryptography.hazmat.decrepit.ciphers import algorithms
 from cryptography.hazmat.primitives.ciphers import Cipher, modes
 
-from src.utils import valid_cast5_key_length
+from src.utils import valid_cast5_key_length, valid_cast5_key
 from config.crypto_globals import CAST5_PADDING
 
 
 class CAST5:
-    def __init__(self, key_bit_len: int):
+    def __init__(self, key: bytes | None = None, key_bit_len: int = 128):
+        if key is not None:
+            valid_cast5_key(key)
+            self.key = key
+            return
+    
         self.key = gen_cast5_key(key_bit_len)
 
 

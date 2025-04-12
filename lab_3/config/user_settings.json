@@ -1,0 +1,8 @@
+{
+    "input_file": "default/input_file.txt",
+    "encrypted_input_file": "default/encrypted_input_file.txt",
+    "decrypted_input_file": "default/decrypted_input_file.txt",
+    "cast5_encrypted_key": "default/cast5_encrypted_key.pem",
+    "rsa_public_key": "default/rsa_public_key.pem",
+    "rsa_private_key": "default/rsa_private_key.pem"
+}

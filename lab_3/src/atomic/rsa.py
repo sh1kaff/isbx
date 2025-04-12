@@ -10,7 +10,12 @@ from config.crypto_globals import RSA_PADDING
 
 
 class RSA:
-    def __init__(self):
+    def __init__(self, private_key: RSAPrivateKey | None = None):
+        if private_key is not None:
+            self.private_key = private_key
+            self.public_key = private_key.public_key()
+            return
+
         key_pair = gen_rsa_key_pair()
         self.public_key = key_pair["public"]
         self.private_key = key_pair["private"]

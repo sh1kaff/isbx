@@ -1,4 +1,12 @@
-﻿def write_bytes(filepath: str, content: bytes):
+﻿import json
+
+
+def read_json(filepath: str) -> dict:
+    with open(filepath, "r") as file:
+        return json.load(file)
+
+
+def write_bytes(filepath: str, content: bytes):
     with open(filepath, "wb") as file:
         file.write(content)
 

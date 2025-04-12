@@ -1,41 +1,32 @@
-﻿import argparse
-
-from src.atomic.rsa import RSA
+﻿from src.atomic.rsa import RSA
 from src.atomic.cast5 import CAST5
+from src.atomic.hybrid import HybridCryptoSystem
 
-
-def valid_args(args: argparse.Namespace):
-    count = 0
-    methods = ("generate", "encrypt", "decrypt")
-
-    for arg in methods:
-        if getattr(args, arg) is not None:
-            count += 1
-
-    if count > 1:
-            raise ValueError(f"You can use only on of them: {methods}")
-
-
-def get_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        prog="",
-        description=""
-    )
-
-    parser.add_argument("--generate", "-g", help="")
-    parser.add_argument("--encrypt", "-e", help="")
-    parser.add_argument("--decrypt", "-d", help="")
-
-    args = parser.parse_args()
-    valid_args(args)
-
-    return args
+from src.args import get_args
+from src.utils import read_json
+from config.default_settings import DEFAULT_SETTINGS
+from config.common_globals import USER_SETTINGS_FILE
 
 
 def main():
     args = get_args()
 
-    print(args)
+    settings = {}
+    if args.auto:
+        settings = DEFAULT_SETTINGS
+    else:
+        settings = read_json(USER_SETTINGS_FILE)
+
+
+    if args.generate:
+        cast5 = CAST5(key_bit_len=args.key_bit_len)
+        rsa = RSA()
+        hybrid = HybridCryptoSystem(cast5, rsa)
+
+        rsa.serialize("public", settings["rsa_public_key"])
+        rsa.serialize("private", settings["rsa_private_key"])
+        hybrid.serialize_cast5_encrypted_key(settings["cast5_encrypted_key"])
+
 
 if __name__ == "__main__":
     main()
