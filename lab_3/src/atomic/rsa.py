@@ -6,7 +6,7 @@ from src.utils import (
     read_bytes,
     write_bytes,
 )
-from config.crypto_globals import RSA_PADDING
+from config.crypto_consts import RSA_PADDING
 
 
 class RSA:
@@ -19,6 +19,11 @@ class RSA:
         key_pair = gen_rsa_key_pair()
         self.public_key = key_pair["public"]
         self.private_key = key_pair["private"]
+
+    
+    def import_private_key(self, filepath: str):
+        self.private_key = RSA.deserialize("private", filepath)
+        self.public_key = self.private_key.public_key()
 
 
     def encrypt(self, content: bytes) -> bytes:
@@ -54,7 +59,7 @@ class RSA:
                 raise ValueError(f"Unsupported key type: {key_type} (only 'public' or 'private')")
 
 
-def gen_rsa_key_pair(bit_len: int = 2048, public_exponent: int = 65537) -> dict:
+def gen_rsa_key_pair(bit_len: int = 2048, public_exponent: int = 65537) -> dict[str, RSAPrivateKey | RSAPublicKey]:
     private_key = rsa.generate_private_key(
         key_size=bit_len,
         public_exponent=public_exponent

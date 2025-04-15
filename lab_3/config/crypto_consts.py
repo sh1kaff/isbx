@@ -2,10 +2,8 @@
 import cryptography.hazmat.primitives.asymmetric.padding as asymm_padding
 from cryptography.hazmat.primitives import hashes
 
-from src.utils import pem_headers
 
-
-CAST5_ENCRYPTED_SERIALIZATION_HEADERS = pem_headers("CAST5 ENCRYPTED KEY")
+CAST5_ENCRYPTED_TITLE = "CAST5 ENCRYPTED KEY"
 
 
 CAST5_PADDING = padding.PKCS7(128)

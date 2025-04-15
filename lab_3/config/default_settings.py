@@ -1,13 +1,16 @@
 ﻿import os
 
-from config.common_globals import DEFAULT_DIR
+from config.paths import DEFAULT_DIR
+
+
+_to_default_dir = lambda filename: os.path.join(DEFAULT_DIR, filename)
 
 
 DEFAULT_SETTINGS = {
-    "input_file": os.path.join(DEFAULT_DIR, "input_file.txt"),
-    "encrypted_input_file": os.path.join(DEFAULT_DIR, "encrypted_input_file.txt"),
-    "decrypted_input_file": os.path.join(DEFAULT_DIR, "decrypted_input_file.txt"),
-    "cast5_encrypted_key": os.path.join(DEFAULT_DIR, "cast5_encrypted_key.pem"),
-    "rsa_public_key": os.path.join(DEFAULT_DIR, "rsa_public_key.pem"),
-    "rsa_private_key": os.path.join(DEFAULT_DIR, "rsa_private_key.pem")
+    "input_file": _to_default_dir("input_file.txt"),
+    "encrypted_input_file": _to_default_dir("encrypted_input_file.txt"),
+    "decrypted_input_file": _to_default_dir("decrypted_input_file.txt"),
+    "cast5_encrypted_key": _to_default_dir("cast5_encrypted_key.pem"),
+    "rsa_public_key": _to_default_dir("rsa_public_key.pem"),
+    "rsa_private_key": _to_default_dir("rsa_private_key.pem")
 }
