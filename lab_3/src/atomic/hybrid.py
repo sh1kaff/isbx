@@ -4,15 +4,12 @@ from src.atomic.cast5 import CAST5
 from src.atomic.rsa import RSA
 
 from src.atomic.rsa import rsa_encrypt_content, rsa_decrypt_content
+from src.atomic.serialization import Serialization
 from src.utils import (
     read_bytes,
     write_bytes,
-    valid_cast5_key,
-    serialize_content,
-    deserialize_content
+    valid_cast5_key
 )
-
-from config.crypto_consts import CAST5_ENCRYPTED_TITLE
 
 
 class HybridCryptoSystem:
@@ -26,28 +23,38 @@ class HybridCryptoSystem:
         self.rsa = rsa or RSA() 
 
 
-    def import_keys(
+    def import_keys_from_files(
         self, 
         rsa_private_key_filepath: str, 
         cast5_encrypted_key_filepath: str
     ):
-        self.rsa.import_private_key(rsa_private_key_filepath)
-        
-        cast5_encrypted_key = self.deserialize_cast5_encrypted_key(cast5_encrypted_key_filepath)
-        cast5_key = self.decrypt_cast5_key(cast5_encrypted_key)
-        
+        ser_rsa_priv = read_bytes(rsa_private_key_filepath)
+        self.rsa = RSA(
+            private_key=Serialization.deserialize_rsa_private_key(ser_rsa_priv)
+        )
+
+        ser_cast5_enc_key = read_bytes(cast5_encrypted_key_filepath)
+        cast5_encrypted_key = Serialization.deserialize_cast5_encrypted_key(ser_cast5_enc_key)
+        cast5_key = rsa_decrypt_cast5_key(self.rsa.private_key, cast5_encrypted_key)
+
         self.cast5 = CAST5(key=cast5_key)
 
 
-    def serialize_keys(
+    def serialize_keys_to_files(
         self,
         rsa_private_key_filepath: str,
         rsa_public_key_filepath: str,
         cast5_encrypted_key_filepath: str
     ):
-        self.serialize_cast5_encrypted_key(cast5_encrypted_key_filepath)
-        self.rsa.serialize("private", rsa_private_key_filepath)
-        self.rsa.serialize("public", rsa_public_key_filepath)
+        ser_cast5_enc_key = Serialization.serialize_cast5_encrypted_key(
+            rsa_encrypt_cast5_key(self.rsa.public_key, self.cast5.key)
+        )
+        ser_rsa_priv = self.rsa.serialize("private")
+        ser_rsa_pub = self.rsa.serialize("public")
+
+        write_bytes(rsa_private_key_filepath, ser_rsa_priv)
+        write_bytes(rsa_public_key_filepath, ser_rsa_pub)
+        write_bytes(cast5_encrypted_key_filepath, ser_cast5_enc_key)
 
 
     def encrypt_content(
@@ -80,24 +87,6 @@ class HybridCryptoSystem:
         return content
 
 
-    def encrypt_cast5_key(self) -> bytes:
-        return rsa_encrypt_cast5_key(self.rsa.public_key, self.cast5.key)
-    
-
-    def decrypt_cast5_key(self, cast5_encrypted_key: bytes) -> bytes:
-        return rsa_decrypt_cast5_key(self.rsa.private_key, cast5_encrypted_key)
-
-
-    def serialize_cast5_encrypted_key(self, filepath: str):
-        cast5_encrypted_key = self.encrypt_cast5_key() 
-        serialize_cast5_encrypted_key(cast5_encrypted_key, filepath)
-    
-
-    @staticmethod
-    def deserialize_cast5_encrypted_key(filepath: str) -> bytes:
-        return deserialize_cast5_encrypted_key(filepath)
-
-
 def rsa_encrypt_cast5_key(public_key: RSAPublicKey, cast5_key: bytes) -> bytes:
     valid_cast5_key(cast5_key)
 
@@ -112,22 +101,3 @@ def rsa_decrypt_cast5_key(rsa_private_key: RSAPrivateKey, encrypted_cast5_key: b
     valid_cast5_key(cast5_key)
 
     return cast5_key
-
-
-def serialize_cast5_encrypted_key(encrypted_key: bytes, filepath: str):
-    serialized_content = serialize_content(
-        encrypted_key,
-        CAST5_ENCRYPTED_TITLE
-    )
-
-    write_bytes(filepath, serialized_content)
-
-
-def deserialize_cast5_encrypted_key(filepath: str) -> bytes:
-    serialized_content = read_bytes(filepath)
-    content = deserialize_content(
-        serialized_content,
-        CAST5_ENCRYPTED_TITLE
-    )
-
-    return content

@@ -2,6 +2,7 @@
 from cryptography.hazmat.decrepit.ciphers import algorithms
 from cryptography.hazmat.primitives.ciphers import Cipher, modes
 
+from src.atomic.serialization import Serialization
 from src.utils import valid_cast5_key_length, valid_cast5_key
 from config.crypto_consts import CAST5_PADDING
 
@@ -14,6 +15,15 @@ class CAST5:
             return
     
         self.key = gen_cast5_key(key_bit_len)
+
+
+    def serialize(self) -> bytes:
+        return Serialization.serialize_cast5_key(self.key)
+
+
+    @staticmethod
+    def deserialize(serialized_key: bytes) -> bytes:
+        return Serialization.deserialize_cast5_key(serialized_key)
 
 
     def encrypt(self, content: bytes) -> bytes:

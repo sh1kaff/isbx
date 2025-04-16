@@ -37,30 +37,3 @@ def pem_headers(title: str) -> dict:
         "start": bytes(f"-----BEGIN {title}-----\n", encoding="UTF-8"),
         "end": bytes(f"-----END {title}-----\n", encoding="UTF-8")
     }
-
-
-def serialize_content(content: bytes, title: str) -> bytes:
-    headers = pem_headers(title)
-
-    if isinstance(content, str):
-        content = read_bytes(content)
-
-    serialized_content = (
-        headers["start"] +
-        base64.encodebytes(content) +
-        headers["end"]
-    )
-
-    return serialized_content
-
-
-def deserialize_content(serialized_content: bytes, title: str) -> bytes:
-    headers = pem_headers(title)
-
-    if not serialized_content.startswith(headers["start"]) or not serialized_content.endswith(headers["end"]):
-        raise ValueError("Unsupported file format")
-    
-    encoded_content = b"".join(serialized_content.split(b"\n")[1:-2])
-    content = base64.decodebytes(encoded_content)
-
-    return content

@@ -19,7 +19,7 @@ def main():
     if args.generate:
         hybrid = HybridCryptoSystem(cast5_keylen=args.cast5_keylen)
 
-        hybrid.serialize_keys(
+        hybrid.serialize_keys_to_files(
             settings["rsa_private_key"],
             settings["rsa_public_key"],
             settings["cast5_encrypted_key"]
@@ -30,7 +30,7 @@ def main():
 
     if args.encrypt or args.decrypt:
         hybrid = HybridCryptoSystem()
-        hybrid.import_keys(
+        hybrid.import_keys_from_files(
             settings["rsa_private_key"],
             settings["cast5_encrypted_key"]
         )

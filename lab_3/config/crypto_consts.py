@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives import hashes
 
 
 CAST5_ENCRYPTED_TITLE = "CAST5 ENCRYPTED KEY"
+CAST5_TITLE = "CAST5 KEY"
 
 
 CAST5_PADDING = padding.PKCS7(128)
