@@ -9,6 +9,7 @@ from src.utils import (
 )
 from config.crypto_consts import CAST5_ENCRYPTED_TITLE, CAST5_TITLE
 
+
 class Serialization:
     @staticmethod
     def serialize_content(content: bytes, title: str) -> bytes:

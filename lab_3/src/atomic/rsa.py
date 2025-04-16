@@ -9,13 +9,29 @@ from config.crypto_consts import RSA_PADDING
 class RSA:
     def __init__(self, private_key: RSAPrivateKey | None = None):
         if private_key is not None:
-            self.private_key = private_key
-            self.public_key = private_key.public_key()
+            self.__private_key = private_key
+            self.__public_key = private_key.public_key()
             return
 
         key_pair = gen_rsa_key_pair()
-        self.public_key = key_pair["public"]
-        self.private_key = key_pair["private"]
+        self.__public_key = key_pair["public"]
+        self.__private_key = key_pair["private"]
+
+
+    @property
+    def public_key(self) -> RSAPublicKey:
+        return self.__public_key
+
+
+    @property
+    def private_key(self) -> RSAPrivateKey:
+        return self.__private_key
+
+
+    @private_key.setter
+    def private_key(self, priv_key: RSAPrivateKey):
+        self.__private_key = priv_key
+        self.__public_key = priv_key.public_key()
 
 
     def encrypt(self, content: bytes) -> bytes:

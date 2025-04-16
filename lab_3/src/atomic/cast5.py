@@ -11,10 +11,22 @@ class CAST5:
     def __init__(self, key: bytes | None = None, key_bit_len: int = 128):
         if key is not None:
             valid_cast5_key(key)
-            self.key = key
+            self.__key = key
             return
     
-        self.key = gen_cast5_key(key_bit_len)
+        self.__key = gen_cast5_key(key_bit_len)
+
+
+    @property
+    def key(self) -> bytes:
+        return self.__key
+
+
+    @key.setter
+    def key(self, k: bytes):
+        valid_cast5_key(k)
+
+        self.__key = k
 
 
     def serialize(self) -> bytes:
