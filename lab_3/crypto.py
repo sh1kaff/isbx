@@ -2,7 +2,7 @@
 
 from src.args import get_args
 from src.utils import read_json
-from config.default_settings import DEFAULT_SETTINGS
+from config.settings import DEFAULT_SETTINGS
 from config.paths import USER_SETTINGS_FILE
 
 
