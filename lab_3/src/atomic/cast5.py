@@ -13,7 +13,7 @@ class CAST5:
             valid_cast5_key(key)
             self.__key = key
             return
-    
+
         self.__key = gen_cast5_key(key_bit_len)
 
 

@@ -61,7 +61,7 @@ class RSA:
                 return Serialization.deserialize_rsa_public_key(content)
 
             case "private":
-                return Serialization.deserialize_rsa_public_key(content)
+                return Serialization.deserialize_rsa_private_key(content)
 
             case _:
                 raise ValueError(f"Unsupported key type: {key_type} (only 'public' or 'private')")

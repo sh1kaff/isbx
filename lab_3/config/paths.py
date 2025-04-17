@@ -5,6 +5,12 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(ROOT_DIR)
 
 
+TEMPLATES_DIR = os.path.join(
+    ROOT_DIR,
+    "templates"
+)
+
+
 DEFAULT_DIR = os.path.join(
     ROOT_DIR,
     "default"
