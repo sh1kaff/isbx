@@ -3,7 +3,7 @@ from aiohttp_session import get_session
 
 from src.atomic.rsa import RSA
 from src.atomic.serialization import Serialization
-from src.utils import async_read_bytes, async_write_bytes
+from src.utils import AsyncIOUtils
 from src.web.errors import valid_rsa_cast5_keys
 from src.web.session import create_session_dir
 from src.web.wrappers import (
@@ -49,13 +49,8 @@ async def key_get_handler(request: web.Request) -> web.Response:
 
     key_path = key_wrap(session_dir, key)
 
-    data = await async_read_bytes(key_path)
+    data = await AsyncIOUtils.async_read_bytes(key_path)
     return file_wrap(key + ".pem", data)
-
-    # async with aiofiles.open(key_path, "rb") as file:
-    #     data = await file.read()
-
-    #     return file_wrap(key + ".pem", data)
 
 
 @routes.post("/keys")
@@ -88,15 +83,15 @@ async def keys_upload_handler(request: web.Request) -> web.Response:
         ).serialize("public")
     
 
-    await async_write_bytes(
+    await AsyncIOUtils.async_write_bytes(
         settings["rsa_private_key"],
         rsa_file_content
     )
-    await async_write_bytes(
+    await AsyncIOUtils.async_write_bytes(
         settings["rsa_public_key"],
         rsa_public_bytes
     )
-    await async_write_bytes(
+    await AsyncIOUtils.async_write_bytes(
         settings["cast5_encrypted_key"],
         cast5_file_content
     )

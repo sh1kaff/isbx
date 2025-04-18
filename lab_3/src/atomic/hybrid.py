@@ -5,11 +5,7 @@ from src.atomic.rsa import RSA
 
 from src.atomic.rsa import rsa_encrypt_content, rsa_decrypt_content
 from src.atomic.serialization import Serialization
-from src.utils import (
-    read_bytes,
-    write_bytes,
-    valid_cast5_key
-)
+from src.utils import Utils
 
 
 class HybridCryptoSystem:
@@ -28,12 +24,12 @@ class HybridCryptoSystem:
         rsa_private_key_filepath: str, 
         cast5_encrypted_key_filepath: str
     ):
-        ser_rsa_priv = read_bytes(rsa_private_key_filepath)
+        ser_rsa_priv = Utils.read_bytes(rsa_private_key_filepath)
         self.rsa = RSA(
             private_key=Serialization.deserialize_rsa_private_key(ser_rsa_priv)
         )
 
-        ser_cast5_enc_key = read_bytes(cast5_encrypted_key_filepath)
+        ser_cast5_enc_key = Utils.read_bytes(cast5_encrypted_key_filepath)
         cast5_encrypted_key = Serialization.deserialize_cast5_encrypted_key(ser_cast5_enc_key)
         cast5_key = rsa_decrypt_cast5_key(self.rsa.private_key, cast5_encrypted_key)
 
@@ -52,9 +48,9 @@ class HybridCryptoSystem:
         ser_rsa_priv = self.rsa.serialize("private")
         ser_rsa_pub = self.rsa.serialize("public")
 
-        write_bytes(rsa_private_key_filepath, ser_rsa_priv)
-        write_bytes(rsa_public_key_filepath, ser_rsa_pub)
-        write_bytes(cast5_encrypted_key_filepath, ser_cast5_enc_key)
+        Utils.write_bytes(rsa_private_key_filepath, ser_rsa_priv)
+        Utils.write_bytes(rsa_public_key_filepath, ser_rsa_pub)
+        Utils.write_bytes(cast5_encrypted_key_filepath, ser_cast5_enc_key)
 
 
     def encrypt_content(
@@ -63,11 +59,11 @@ class HybridCryptoSystem:
         output_filepath: str | None = None
     ) -> bytes:
         if isinstance(content, str):
-            content = read_bytes(content)
+            content = Utils.read_bytes(content)
 
         encrypted_content = self.cast5.encrypt(content)
         if output_filepath is not None:
-            write_bytes(output_filepath, encrypted_content)
+            Utils.write_bytes(output_filepath, encrypted_content)
 
         return encrypted_content
 
@@ -78,17 +74,17 @@ class HybridCryptoSystem:
         output_filepath: str | None = None
     ) -> bytes:
         if isinstance(encrypted_content, str):
-            encrypted_content = read_bytes(encrypted_content)
+            encrypted_content = Utils.read_bytes(encrypted_content)
 
         content = self.cast5.decrypt(encrypted_content)
         if output_filepath is not None:
-            write_bytes(output_filepath, content)
+            Utils.write_bytes(output_filepath, content)
 
         return content
 
 
 def rsa_encrypt_cast5_key(public_key: RSAPublicKey, cast5_key: bytes) -> bytes:
-    valid_cast5_key(cast5_key)
+    Utils.valid_cast5_key(cast5_key)
 
     encrypted_cast5_key = rsa_encrypt_content(public_key, cast5_key)
 
@@ -98,6 +94,6 @@ def rsa_encrypt_cast5_key(public_key: RSAPublicKey, cast5_key: bytes) -> bytes:
 def rsa_decrypt_cast5_key(rsa_private_key: RSAPrivateKey, encrypted_cast5_key: bytes) -> bytes:
     cast5_key = rsa_decrypt_content(rsa_private_key, encrypted_cast5_key)
     
-    valid_cast5_key(cast5_key)
+    Utils.valid_cast5_key(cast5_key)
 
     return cast5_key

@@ -3,20 +3,17 @@
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 from cryptography.hazmat.primitives import serialization
 
-from src.utils import (
-    pem_headers,
-    read_bytes
-)
+from src.utils import Utils
 from config.crypto_consts import CAST5_ENCRYPTED_TITLE, CAST5_TITLE
 
 
 class Serialization:
     @staticmethod
     def serialize_content(content: bytes, title: str) -> bytes:
-        headers = pem_headers(title)
+        headers = Utils.pem_headers(title)
 
         if isinstance(content, str):
-            content = read_bytes(content)
+            content = Utils.read_bytes(content)
 
         serialized_content = (
             headers["start"] +
@@ -29,7 +26,7 @@ class Serialization:
 
     @staticmethod
     def deserialize_content(serialized_content: bytes, title: str) -> bytes:
-        headers = pem_headers(title)
+        headers = Utils.pem_headers(title)
 
         if not serialized_content.startswith(headers["start"]) or not serialized_content.endswith(headers["end"]):
             raise ValueError("Unsupported file format")

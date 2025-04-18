@@ -3,7 +3,7 @@ from cryptography.hazmat.decrepit.ciphers import algorithms
 from cryptography.hazmat.primitives.ciphers import Cipher, modes
 
 from src.atomic.serialization import Serialization
-from src.utils import valid_cast5_key_length, valid_cast5_key
+from src.utils import ValidCAST5Utils
 
 from config.crypto_consts import CAST5_PADDING
 from config.messages import CRYPTO_ERRORS
@@ -12,7 +12,7 @@ from config.messages import CRYPTO_ERRORS
 class CAST5:
     def __init__(self, key: bytes | None = None, key_bit_len: int = 128):
         if key is not None:
-            valid_cast5_key(key)
+            ValidCAST5Utils.valid_cast5_key(key)
             self.__key = key
             return
 
@@ -26,7 +26,7 @@ class CAST5:
 
     @key.setter
     def key(self, k: bytes):
-        valid_cast5_key(k)
+        ValidCAST5Utils.valid_cast5_key(k)
 
         self.__key = k
 
@@ -49,7 +49,7 @@ class CAST5:
 
 
 def gen_cast5_key(bit_len: int) -> bytes:
-    valid_cast5_key_length(bit_len)
+    ValidCAST5Utils.valid_cast5_key_length(bit_len)
     
     return token_bytes(bit_len // 8)
 

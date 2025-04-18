@@ -1,19 +1,19 @@
 ﻿from src.atomic.hybrid import HybridCryptoSystem
 
-from src.args import get_args
-from src.utils import read_json
+from src.args import Args
+from src.utils import IOUtils
 from config.settings import DEFAULT_SETTINGS
 from config.paths import USER_SETTINGS_FILE
 
 
 def main():
-    args = get_args()
+    args = Args.get_args()
 
     settings = {}
     if args.auto:
         settings = DEFAULT_SETTINGS
     else:
-        settings = read_json(USER_SETTINGS_FILE)
+        settings = IOUtils.read_json(USER_SETTINGS_FILE)
 
 
     if args.generate:
