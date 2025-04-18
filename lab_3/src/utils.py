@@ -1,4 +1,5 @@
 ﻿import json
+import aiofiles
 
 
 def read_json(filepath: str) -> dict:
@@ -6,9 +7,19 @@ def read_json(filepath: str) -> dict:
         return json.load(file)
 
 
+async def async_write_bytes(filepath: str, content: bytes):
+    async with aiofiles.open(filepath, "wb") as file:
+        await file.write(content)
+
+
 def write_bytes(filepath: str, content: bytes):
     with open(filepath, "wb") as file:
         file.write(content)
+
+
+async def async_read_bytes(filepath: str) -> bytes:
+    async with aiofiles.open(filepath, "rb") as file:
+        return await file.read()
 
 
 def read_bytes(filepath: str) -> bytes:

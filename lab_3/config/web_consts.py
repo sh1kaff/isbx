@@ -5,8 +5,7 @@
 )
 
 
-ALLOWED_FILENAMES = (
-    "input_file",
-    "encrypted_input_file",
-    "decrypted_input_file"
+ALLOWED_UPLOAD_FILENAMES = (
+    "rsa_private_key",
+    "cast5_encrypted_key"
 )

@@ -3,7 +3,7 @@ import aiohttp_jinja2
 import jinja2
 
 from src.web.errors import error_middleware
-from src.web.routes import routes
+from src.web.routes import actions, keys, pages
 from src.web.session import setup_session, cleanup_tmp
 
 from config.paths import(
@@ -26,7 +26,11 @@ async def init_app() -> web.Application:
         ALLOWED_DOWNLOAD_KEYS=ALLOWED_DOWNLOAD_KEYS
     )
 
-    app.add_routes(routes)
+    app.add_routes([
+        *actions.routes,
+        *keys.routes,
+        *pages.routes
+    ])
 
     app.router.add_static(
         prefix="/static/",

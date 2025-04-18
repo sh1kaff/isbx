@@ -4,7 +4,10 @@
     "keys_not_yet_generated": "You haven't generated the keys yet!",
     "invalid_json": "Invalud JSON!",
     "required_param": "Param {param} is required!",
-    "no_file_key": "No 'file' key in request!"
+    "no_file_key": "No 'file' key in request!",
+    "invalid_upload_filename": "Invalid upload filename!",
+    "keys_required": "Required keys: rsa_private_key, cast5_encrypted_key!",
+    "invalid_key_pair": "Invalid key pair"
 }
 
 

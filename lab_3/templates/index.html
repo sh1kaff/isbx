@@ -9,18 +9,34 @@
     <script src='/static/main.js'></script>
 </head>
 <body>
+
     <div id="download_keys" hidden>
         {% for key in ALLOWED_DOWNLOAD_KEYS %}
             <a href="/keys/{{key}}">Download {{key}}.pem</a><br>
         {% endfor %}
     </div>
-    <form action="/encrypt" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">  
-        <button type="submit">Encrypt</button>
-    </form>
-    <form action="/decrypt" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">  
-        <button type="submit">Decrypt</button>
-    </form>
+
+    <div id="encrypt">
+        <form action="/encrypt" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>  
+            <button type="submit">Encrypt</button>
+        </form>
+    </div>
+
+    <div id="decrypt">
+        <form action="/decrypt" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>  
+            <button type="submit">Decrypt</button>
+        </form>
+    </div>
+
+    <div id="upload_keys">
+        <form action="/keys" method="post" enctype="multipart/form-data">
+            <input type="file" name="rsa_private_key" required>
+            <input type="file" name="cast5_encrypted_key" required>
+            <button type="submit">Upload Keys</button>
+        </form>
+    </div>
+
 </body>
 </html>
