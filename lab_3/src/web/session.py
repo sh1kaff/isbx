@@ -48,5 +48,5 @@ def setup_session(app: Application):
 
     setup(
         app=app,
-        storage=EncryptedCookieStorage(session_key)
+        storage=EncryptedCookieStorage(session_key, cookie_name="session")
     )
