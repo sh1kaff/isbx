@@ -2,6 +2,7 @@
 import aiohttp_jinja2
 import jinja2
 
+from src.web.errors import error_middleware
 from src.web.routes import routes
 from src.web.session import setup_session, cleanup_tmp
 
@@ -13,7 +14,9 @@ from config.paths import(
 
 
 async def init_app() -> web.Application:
-    app = web.Application()
+    app = web.Application(
+        middlewares=[error_middleware]
+    )
 
     aiohttp_jinja2.setup(
         app,

@@ -7,7 +7,7 @@ import secrets
 import shutil
 import os
 
-from config.web_consts import WEB_ERRORS
+from config.messages import WEB_ERRORS
 from config.paths import TMP_DIR
 
 

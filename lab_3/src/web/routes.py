@@ -14,10 +14,8 @@ from src.web.wrappers import (
 from src.atomic.hybrid import HybridCryptoSystem
 
 from config.settings import gen_settings
-from config.web_consts import (
-    ALLOWED_DOWNLOAD_KEYS,
-    WEB_ERRORS
-)
+from config.web_consts import ALLOWED_DOWNLOAD_KEYS
+from config.messages import WEB_ERRORS
 
 
 routes = web.RouteTableDef()
@@ -45,26 +43,21 @@ async def home_handler(request: web.Request) -> dict:
 
 @routes.post("/generate")
 async def generate_handler(request: web.Request) -> web.Response:
-    try:
-        data = await request.json()
+    data = await request.json()
 
-        session = await get_session(request)
+    session = await get_session(request)
 
-        if session.get("dir_path") is None:
-            create_session_dir(session)
+    if session.get("dir_path") is None:
+        create_session_dir(session)
 
-        settings = gen_settings(session["dir_path"])
+    settings = gen_settings(session["dir_path"])
 
-        hybrid = HybridCryptoSystem(cast5_keylen=data.get("cast5_keylen", 128))
-        hybrid.serialize_keys_to_files(
-            settings["rsa_private_key"],
-            settings["rsa_public_key"],
-            settings["cast5_encrypted_key"]
-        )
-    except ContentTypeError:
-        return error_wrap(WEB_ERRORS["invalid_json"])
-    except Exception as e:
-        return error_wrap(str(e))
+    hybrid = HybridCryptoSystem(cast5_keylen=data.get("cast5_keylen", 128))
+    hybrid.serialize_keys_to_files(
+        settings["rsa_private_key"],
+        settings["rsa_public_key"],
+        settings["cast5_encrypted_key"]
+    )
 
     return success_wrap(keys=ALLOWED_DOWNLOAD_KEYS)
 

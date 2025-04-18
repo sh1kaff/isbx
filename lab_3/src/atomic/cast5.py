@@ -4,7 +4,9 @@ from cryptography.hazmat.primitives.ciphers import Cipher, modes
 
 from src.atomic.serialization import Serialization
 from src.utils import valid_cast5_key_length, valid_cast5_key
+
 from config.crypto_consts import CAST5_PADDING
+from config.messages import CRYPTO_ERRORS
 
 
 class CAST5:
@@ -66,15 +68,18 @@ def cast5_encrypt_content(key: bytes, content: bytes) -> bytes:
 
 
 def cast5_decrypt_content(key: bytes, encrypted_padded_content: bytes) -> bytes:
-    # error handler
     iv = encrypted_padded_content[:8]
     encrypted_padded_content = encrypted_padded_content[8:]
 
     cipher = Cipher(algorithms.CAST5(key), mode=modes.CBC(iv))
     decryptor = cipher.decryptor()
     unpadder = CAST5_PADDING.unpadder()
+    
+    try:
+        padded_content = decryptor.update(encrypted_padded_content) + decryptor.finalize()
+    except ValueError:
+        raise ValueError(CRYPTO_ERRORS["decrypt_invalid_cast5"])
 
-    padded_content = decryptor.update(encrypted_padded_content) + decryptor.finalize()
     content = unpadder.update(padded_content) + unpadder.finalize()
 
     return content

@@ -2,9 +2,9 @@
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 
 from src.atomic.serialization import Serialization
-from config.crypto_consts import RSA_PADDING
 
-# убрать все импорты в cast5 и rsa и сделать, чтобы более сложные операции выполняла HCS, а rsa&cast5 делала только самую базу
+from config.crypto_consts import RSA_PADDING
+from config.messages import CRYPTO_ERRORS
 
 class RSA:
     def __init__(self, private_key: RSAPrivateKey | None = None):
@@ -89,7 +89,11 @@ def rsa_encrypt_content(public_key: RSAPublicKey, content: bytes) -> bytes:
 
 
 def rsa_decrypt_content(private_key: RSAPrivateKey, encrypted_content: bytes) -> bytes:
-    return private_key.decrypt(
-        ciphertext=encrypted_content,
-        padding=RSA_PADDING
-    )
+    try:
+        return private_key.decrypt(
+            ciphertext=encrypted_content,
+            padding=RSA_PADDING
+        )
+    except:
+        ValueError(CRYPTO_ERRORS["decrypt_invalid_rsa"])
+
