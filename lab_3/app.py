@@ -11,6 +11,7 @@ from config.paths import(
     STATIC_DIR,
     TMP_DIR
 )
+from config.web_consts import ALLOWED_DOWNLOAD_KEYS
 
 
 async def init_app() -> web.Application:
@@ -21,8 +22,10 @@ async def init_app() -> web.Application:
     aiohttp_jinja2.setup(
         app,
         loader=jinja2.FileSystemLoader(TEMPLATES_DIR)
+    ).globals.update(
+        ALLOWED_DOWNLOAD_KEYS=ALLOWED_DOWNLOAD_KEYS
     )
-    
+
     app.add_routes(routes)
 
     app.router.add_static(

@@ -3,12 +3,17 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>LAB 3: GODDAMNED AIOHTTP</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/main.css'>
     <script src='/static/main.js'></script>
 </head>
 <body>
+    <div id="download_keys" hidden>
+        {% for key in ALLOWED_DOWNLOAD_KEYS %}
+            <a href="/keys/{{key}}">Download {{key}}.pem</a><br>
+        {% endfor %}
+    </div>
     <form action="/encrypt" method="post" enctype="multipart/form-data">
         <input type="file" name="file">  
         <button type="submit">Encrypt</button>

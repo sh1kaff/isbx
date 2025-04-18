@@ -2,7 +2,6 @@
 from config.paths import DEFAULT_DIR
 
 
-
 def gen_settings(base_dir: str) -> dict:
     return {
         filename.split(".")[0]: os.path.join(base_dir, filename)
