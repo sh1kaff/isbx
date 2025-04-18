@@ -49,11 +49,24 @@ async def generate_handler(request: web.Request) -> web.Response:
     except Exception as e:
         return error_wrap(str(e))
 
-    return success_wrap("Keys generated!")
+    return success_wrap()
 
 
-@routes.get("/get_key/{key}")
-async def get_handler(request: web.Request) -> web.Response:
+@routes.get("/keys")
+async def keys_handler(request: web.Request) -> web.Response:
+    session = await get_session(request)
+    session_dir = session.get("dir_path")
+
+    if session_dir is None:
+        return error_wrap(WEB_ERRORS["keys_not_yet_generated"])
+
+    return success_wrap(
+        keys=ALLOWED_DOWNLOAD_KEYS
+    )
+
+
+@routes.get("/keys/{key}")
+async def keys_get_handler(request: web.Request) -> web.Response:
     key = request.match_info.get("key", "")
 
     if key not in ALLOWED_DOWNLOAD_KEYS:
