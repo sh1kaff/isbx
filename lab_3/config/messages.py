@@ -7,7 +7,8 @@
     "no_file_key": "No 'file' key in request!",
     "invalid_upload_filename": "Invalid upload filename!",
     "keys_required": "Required keys: rsa_private_key, cast5_encrypted_key!",
-    "invalid_key_pair": "Invalid key pair"
+    "invalid_key_pair": "Invalid key pair",
+    "max_size": "Max uploaded size: {size}"
 }
 
 

@@ -1,6 +1,7 @@
 ﻿from aiohttp import web
 from aiohttp_session import get_session
 
+from src.web.errors import valid_file_size
 from src.web.session import create_session_dir
 from src.web.wrappers import (
     error_wrap,
@@ -46,6 +47,8 @@ async def encrypt_decrypt_handler(request: web.Request) -> web.Response:
 
     if file is None:
         return error_wrap(WEB_ERRORS["no_file_key"])
+
+    valid_file_size(file)
 
     session = await get_session(request)
     session_dir = session.get("dir_path")

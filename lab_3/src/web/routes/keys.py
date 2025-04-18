@@ -4,7 +4,8 @@ from aiohttp_session import get_session
 from src.atomic.rsa import RSA
 from src.atomic.serialization import Serialization
 from src.utils import AsyncIOUtils
-from src.web.errors import valid_rsa_cast5_keys
+
+from src.web.errors import valid_rsa_cast5_keys, valid_file_size
 from src.web.session import create_session_dir
 from src.web.wrappers import (
     error_wrap,
@@ -63,6 +64,9 @@ async def keys_upload_handler(request: web.Request) -> web.Response:
     if any(f is None for f in (rsa_file, cast5_file)):
         return error_wrap(WEB_ERRORS["keys_required"])
 
+    valid_file_size(rsa_file)
+    valid_file_size(cast5_file)
+
     rsa_file_content = rsa_file.file.read()
     cast5_file_content = cast5_file.file.read()
 
@@ -77,11 +81,11 @@ async def keys_upload_handler(request: web.Request) -> web.Response:
 
     settings = gen_settings(session["dir_path"])
 
-    
+
     rsa_public_bytes = RSA(
         Serialization.deserialize_rsa_private_key(rsa_file_content)
-        ).serialize("public")
-    
+    ).serialize("public")
+
 
     await AsyncIOUtils.async_write_bytes(
         settings["rsa_private_key"],
