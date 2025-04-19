@@ -6,37 +6,40 @@
     <title>LAB 3: GODDAMNED AIOHTTP</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/static/main.css'>
-    <script src='/static/main.js'></script>
 </head>
 <body>
 
     <div id="download_keys" hidden>
         {% for key in ALLOWED_DOWNLOAD_KEYS %}
-            <a href="/keys/{{key}}">Download {{key}}.pem</a><br>
+            <button id="{{ key }}">Download {{key}}.pem</button><br>
         {% endfor %}
     </div>
 
     <div id="encrypt">
-        <form action="/encrypt" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>  
-            <button type="submit">Encrypt</button>
-        </form>
+        <input type="file" name="file" required>  
+        <button>Encrypt</button>
     </div>
 
     <div id="decrypt">
-        <form action="/decrypt" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>  
-            <button type="submit">Decrypt</button>
-        </form>
+        <input type="file" name="file" required>  
+        <button>Decrypt</button>
     </div>
 
     <div id="upload_keys">
-        <form action="/keys" method="post" enctype="multipart/form-data">
-            <input type="file" name="rsa_private_key" required>
-            <input type="file" name="cast5_encrypted_key" required>
-            <button type="submit">Upload Keys</button>
-        </form>
+        <input type="file" name="rsa_private_key" required>
+        <input type="file" name="cast5_encrypted_key" required>
+        <button>Upload Keys</button>
     </div>
 
+    <div id="generate">
+        <input type="number" value="128">
+        <button>Generate Keys</button>
+        <div class="deepseek-credit"></div>
+    </div>
+
+    <div id="error">
+    </div>
+
+    <script src='/static/main.js'></script>
 </body>
 </html>

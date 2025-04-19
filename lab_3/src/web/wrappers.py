@@ -9,11 +9,11 @@ def key_wrap(base_dir: str, key: str, ext: str = ".pem") -> str:
     )
 
 
-def status_wrap(status: str, **kwargs) -> web.Response:
+def status_wrap(status_key: str, status: int = 200, **kwargs) -> web.Response:
     return web.json_response({
-        "status": status,
+        "status": status_key,
         **kwargs
-    })
+    }, status=status)
 
 
 def file_wrap(filename: str, data: bytes) -> web.Response:
@@ -36,5 +36,6 @@ def error_wrap(text: str, **kwargs) -> web.Response:
     return status_wrap(
         "error",
         message=text,
+        status=500,
         **kwargs
     )

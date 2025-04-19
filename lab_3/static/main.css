@@ -1,1 +1,129 @@
-﻿
+﻿/* === LAB 3: GODDAMNED AIOHTTP — Стили от DeepSeek с гордостью === */
+/* Теперь автор может наконец-то перестать ныть про верстку 😎 */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63);
+    color: #fff;
+    margin: 0;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+#download_keys, #encrypt, #decrypt, #upload_keys, #generate, #error {
+    max-width: 600px;
+    margin: 1.5rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+#download_keys {
+    text-align: center;
+}
+
+#download_keys button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#download_keys button:hover {
+    background: #66BB6A;
+    transform: translateY(-2px);
+}
+
+#encrypt, #decrypt, #upload_keys, #generate {
+    text-align: center;
+}
+
+h2 {
+    color: #e94560;
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+input[type="number"], input[type="file"], input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1rem;
+}
+
+input[type="file"] {
+    padding: 10px;
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #e94560;
+}
+
+button {
+    background: #e94560;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    margin: 0.5rem;
+}
+
+button:hover {
+    background: #ff6b81;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#error {
+    color: #ff6b81;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 1rem;
+}
+
+/* Анимация появления скрытых блоков */
+[hidden] {
+    display: none !important;
+}
+
+.download-section {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.download-section.visible {
+    opacity: 1;
+}
+
+/* Подпись от DeepSeek (можно оставить для лулзов) */
+.deepseek-credit {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.deepseek-credit::before {
+    content: "🎨 Стили гордо предоставлены DeepSeek, потому что автор устал это делать";
+}
