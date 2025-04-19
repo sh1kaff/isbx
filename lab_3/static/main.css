@@ -8,6 +8,21 @@ body {
     margin: 0;
     padding: 2rem;
     min-height: 100vh;
+    padding-bottom: 60px !important;  /* Отступ = высота #error + padding */
+}
+
+#upload_keys {
+    text-align: center;
+}
+
+#upload_keys input[type="file"] {
+    display: block;
+    margin: 10px auto;
+}
+
+#upload_keys button {
+    display: block;
+    margin: 10px auto;
 }
 
 #download_keys, #encrypt, #decrypt, #upload_keys, #generate, #error {
@@ -95,11 +110,20 @@ button:active {
     transform: translateY(0);
 }
 
+/* === Стиль для фиксированной панели ошибок === */
 #error {
-    color: #ff6b81;
-    text-align: center;
-    font-size: 0.9rem;
+    position: fixed;  /* Фиксируем на экране */
+    bottom: 0;        /* Прижимаем к низу */
+    left: 0;          /* Растягиваем на всю ширину */
+    right: 0;
+    background: rgba(40, 0, 0, 0.9);  /* Тёмно-красный фон */
+    color: #ff6b81;                   /* Цвет текста */
     padding: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 2px solid #e94560;    /* Красная полоса сверху */
+    z-index: 1000;                    /* Чтобы была поверх других элементов */
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Анимация появления скрытых блоков */

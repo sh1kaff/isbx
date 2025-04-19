@@ -9,6 +9,20 @@
 </head>
 <body>
 
+    <div id="generate">
+        <input type="number" value="128">
+        <button>Generate Keys</button>
+        <div class="deepseek-credit"></div>
+    </div>
+
+    <div id="upload_keys">
+        <label for="rsa_private_key">RSA Private Key</label>
+        <input type="file" name="rsa_private_key" required>
+        <label for="cast5_encrypted_key">CAST5 Encrypted Key</label>
+        <input type="file" name="cast5_encrypted_key" required>
+        <button>Upload Keys</button>
+    </div>
+
     <div id="download_keys" hidden>
         {% for key in ALLOWED_DOWNLOAD_KEYS %}
             <button id="{{ key }}">Download {{key}}.pem</button><br>
@@ -25,19 +39,7 @@
         <button>Decrypt</button>
     </div>
 
-    <div id="upload_keys">
-        <input type="file" name="rsa_private_key" required>
-        <input type="file" name="cast5_encrypted_key" required>
-        <button>Upload Keys</button>
-    </div>
-
-    <div id="generate">
-        <input type="number" value="128">
-        <button>Generate Keys</button>
-        <div class="deepseek-credit"></div>
-    </div>
-
-    <div id="error">
+    <div id="error" hidden>
     </div>
 
     <script src='/static/main.js'></script>

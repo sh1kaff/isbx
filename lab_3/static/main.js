@@ -27,7 +27,13 @@ async function generateKeys(cast5_keylen = 128) {
 
 
 function updateError(text = "") {
-    document.querySelector("#error").textContent = text;
+    let errorTag = document.querySelector("#error");
+    errorTag.textContent = text;
+    if (!text) {
+        errorTag.hidden = true;
+    } else {
+        errorTag.hidden = false;
+    }
 }
 
 
@@ -159,7 +165,13 @@ async function uploadKeys() {
 
 
 document.querySelector("#encrypt button").addEventListener("click", async function(event) {
-    encrypt().catch(error => { updateError(error) });
+    try {
+        await encrypt();
+    } catch (error) {
+        updateError(error);
+        return;
+    }
+
     updateError();
     alert("Encrypted")
 });
