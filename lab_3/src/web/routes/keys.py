@@ -40,7 +40,9 @@ async def key_get_handler(request: web.Request) -> web.Response:
     key = request.match_info.get("key", "")
 
     if key not in ALLOWED_DOWNLOAD_KEYS:
-        return error_wrap(WEB_ERRORS["download_key_not_allowed"].format(key=key))
+        return error_wrap(
+            WEB_ERRORS["download_key_not_allowed"].format(key=key)
+        )
 
     session = await get_session(request)
     session_dir = session.get("dir_path")
@@ -81,11 +83,9 @@ async def keys_upload_handler(request: web.Request) -> web.Response:
 
     settings = gen_settings(session["dir_path"])
 
-
     rsa_public_bytes = RSA(
         Serialization.deserialize_rsa_private_key(rsa_file_content)
     ).serialize("public")
-
 
     await AsyncIOUtils.async_write_bytes(
         settings["rsa_private_key"],
@@ -100,5 +100,4 @@ async def keys_upload_handler(request: web.Request) -> web.Response:
         cast5_file_content
     )
 
-    
     return success_wrap(keys=ALLOWED_DOWNLOAD_KEYS)

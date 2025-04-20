@@ -13,7 +13,6 @@ class AsyncIOUtils:
 
         async with aiofiles.open(filepath, "wb") as file:
             await file.write(content)
-    
 
     @staticmethod
     async def async_read_bytes(filepath: str) -> bytes:
@@ -28,23 +27,25 @@ class IOUtils:
     @staticmethod
     def read_json(filepath: str) -> dict:
         if not os.path.isfile(filepath):
-                raise FileNotFoundError(COMMON_ERRORS["invalid_file_path"].format(path=filepath))
+            raise FileNotFoundError(
+                COMMON_ERRORS["invalid_file_path"].format(path=filepath)
+            )
 
         if not filepath.endswith(".json"):
-            raise ValueError(COMMON_ERRORS["file_not_json"].format(path=filepath))
+            raise ValueError(
+                COMMON_ERRORS["file_not_json"].format(path=filepath)
+            )
 
         with open(filepath, "r") as file:
             return json.load(file)
 
-
     @staticmethod
     def write_bytes(filepath: str, content: bytes):
         if not os.path.isfile(filepath):
-            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath)) 
+            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath))
 
         with open(filepath, "wb") as file:
             file.write(content)
-
 
     @staticmethod
     def read_bytes(filepath: str) -> bytes:
@@ -65,7 +66,6 @@ class ValidCAST5Utils:
 
         if bit_len % 8 != 0:
             raise ValueError(CRYPTO_ERRORS["cast5_key_incr"])
-
 
     @staticmethod
     def valid_cast5_key(key: bytes):

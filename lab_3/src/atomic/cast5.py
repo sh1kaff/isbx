@@ -18,11 +18,9 @@ class CAST5:
 
         self.__key = gen_cast5_key(key_bit_len)
 
-
     @property
     def key(self) -> bytes:
         return self.__key
-
 
     @key.setter
     def key(self, k: bytes):
@@ -30,19 +28,15 @@ class CAST5:
 
         self.__key = k
 
-
     def serialize(self) -> bytes:
         return Serialization.serialize_cast5_key(self.key)
-
 
     @staticmethod
     def deserialize(serialized_key: bytes) -> bytes:
         return Serialization.deserialize_cast5_key(serialized_key)
 
-
     def encrypt(self, content: bytes) -> bytes:
         return cast5_encrypt_content(self.key, content)
-
 
     def decrypt(self, content: bytes) -> bytes:
         return cast5_decrypt_content(self.key, content)
@@ -50,7 +44,7 @@ class CAST5:
 
 def gen_cast5_key(bit_len: int) -> bytes:
     ValidCAST5Utils.valid_cast5_key_length(bit_len)
-    
+
     return token_bytes(bit_len // 8)
 
 
@@ -62,21 +56,26 @@ def cast5_encrypt_content(key: bytes, content: bytes) -> bytes:
     padder = CAST5_PADDING.padder()
 
     padded_content = padder.update(content) + padder.finalize()
-    encrypted_padded_content = encryptor.update(padded_content) + encryptor.finalize()
+    encrypted_padded_content = encryptor.update(padded_content) + \
+        encryptor.finalize()
 
     return iv + encrypted_padded_content
 
 
-def cast5_decrypt_content(key: bytes, encrypted_padded_content: bytes) -> bytes:
+def cast5_decrypt_content(
+    key: bytes,
+    encrypted_padded_content: bytes
+) -> bytes:
     iv = encrypted_padded_content[:8]
     encrypted_padded_content = encrypted_padded_content[8:]
 
     cipher = Cipher(algorithms.CAST5(key), mode=modes.CBC(iv))
     decryptor = cipher.decryptor()
     unpadder = CAST5_PADDING.unpadder()
-    
+
     try:
-        padded_content = decryptor.update(encrypted_padded_content) + decryptor.finalize()
+        padded_content = decryptor.update(encrypted_padded_content) + \
+            decryptor.finalize()
     except ValueError:
         raise ValueError(CRYPTO_ERRORS["decrypt_invalid_cast5"])
 

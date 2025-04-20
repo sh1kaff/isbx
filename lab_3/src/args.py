@@ -1,5 +1,11 @@
 ﻿import argparse
 
+from config.messages import (
+    COMMON_ERRORS,
+    HELP,
+    DESC
+)
+
 
 class Args:
     @staticmethod
@@ -12,24 +18,31 @@ class Args:
                 count += 1
 
         if count > 1:
-            raise ValueError(f"You can use only on of them: {methods}")
+            raise ValueError(
+                COMMON_ERRORS["allowed_methods"].format(methods=methods)
+            )
 
         elif count == 0:
-            raise ValueError(f"One of this settings are must to be!")
-
+            raise ValueError(COMMON_ERRORS["necess_methods"])
 
     @staticmethod
     def get_args() -> argparse.Namespace:
         parser = argparse.ArgumentParser(
-            prog="",
-            description=""
+            prog=DESC["prog_name"],
+            description=DESC["prog_desc"]
         )
 
-        parser.add_argument("--cast5_keylen", "-cl", type=int, default=128, help="")
-        parser.add_argument("--generate", "-g", action="store_true", help="")
-        parser.add_argument("--encrypt", "-e", action="store_true", help="")
-        parser.add_argument("--decrypt", "-d", action="store_true", help="")
-        parser.add_argument("--auto", "-a", action="store_true", help="")
+        parser.add_argument(
+            "--cast5_keylen",
+            "-cl",
+            type=int,
+            default=128,
+            help=HELP["cast5_keylen"]
+        )
+        parser.add_argument("--generate", "-g", action="store_true", help=HELP["generate"])
+        parser.add_argument("--encrypt", "-e", action="store_true", help=HELP["encrypt"])
+        parser.add_argument("--decrypt", "-d", action="store_true", help=HELP["decrypt"])
+        parser.add_argument("--auto", "-a", action="store_true", help=HELP["auto"])
 
         args = parser.parse_args()
         Args.valid_args(args)

@@ -19,9 +19,13 @@ async def error_middleware(request: web.Request, handler) -> web.Response:
 
 def valid_rsa_cast5_keys(rsa_key_ser: bytes, cast5_key_ser: bytes):
     try:
-        rsa_private_key = Serialization.deserialize_rsa_private_key(rsa_key_ser)
-        cast5_encrypted_key = Serialization.deserialize_cast5_encrypted_key(cast5_key_ser)
-        
+        rsa_private_key = Serialization.deserialize_rsa_private_key(
+            rsa_key_ser
+        )
+        cast5_encrypted_key = Serialization.deserialize_cast5_encrypted_key(
+            cast5_key_ser
+        )
+
         rsa_decrypt_cast5_key(
             rsa_private_key,
             cast5_encrypted_key

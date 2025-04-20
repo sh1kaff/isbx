@@ -1,6 +1,9 @@
 ﻿import base64
 
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
+from cryptography.hazmat.primitives.asymmetric.rsa import (
+    RSAPrivateKey,
+    RSAPublicKey
+)
 from cryptography.hazmat.primitives import serialization
 
 from src.utils import Utils
@@ -23,19 +26,18 @@ class Serialization:
 
         return serialized_content
 
-
     @staticmethod
     def deserialize_content(serialized_content: bytes, title: str) -> bytes:
         headers = Utils.pem_headers(title)
 
-        if not serialized_content.startswith(headers["start"]) or not serialized_content.endswith(headers["end"]):
+        if not serialized_content.startswith(headers["start"]) or \
+                not serialized_content.endswith(headers["end"]):
             raise ValueError("Unsupported file format")
-        
+
         encoded_content = b"".join(serialized_content.split(b"\n")[1:-2])
         content = base64.decodebytes(encoded_content)
 
         return content
-
 
     @staticmethod
     def serialize_cast5_key(key: bytes) -> bytes:
@@ -46,7 +48,6 @@ class Serialization:
 
         return serialized_content
 
-
     @staticmethod
     def deserialize_cast5_key(serialized_key: bytes) -> bytes:
         encrypted_key = Serialization.deserialize_content(
@@ -55,7 +56,6 @@ class Serialization:
         )
 
         return encrypted_key
-
 
     @staticmethod
     def serialize_rsa_private_key(private_key: RSAPrivateKey) -> bytes:
@@ -66,7 +66,6 @@ class Serialization:
         )
 
         return pem_content
-    
 
     @staticmethod
     def serialize_rsa_public_key(public_key: RSAPublicKey) -> bytes:
@@ -76,7 +75,6 @@ class Serialization:
         )
 
         return pem_content
-
 
     @staticmethod
     def deserialize_rsa_private_key(
@@ -90,7 +88,6 @@ class Serialization:
 
         return private_key
 
-
     @staticmethod
     def deserialize_rsa_public_key(pem_content: bytes) -> RSAPublicKey:
         public_key = serialization.load_pem_public_key(
@@ -98,7 +95,6 @@ class Serialization:
         )
 
         return public_key
-
 
     @staticmethod
     def serialize_cast5_encrypted_key(encrypted_key: bytes) -> bytes:
@@ -108,10 +104,11 @@ class Serialization:
         )
 
         return serialized_content
-    
 
     @staticmethod
-    def deserialize_cast5_encrypted_key(serialized_encrypted_key: bytes) -> bytes:
+    def deserialize_cast5_encrypted_key(
+        serialized_encrypted_key: bytes
+    ) -> bytes:
         encrypted_key = Serialization.deserialize_content(
             serialized_encrypted_key,
             CAST5_ENCRYPTED_TITLE
