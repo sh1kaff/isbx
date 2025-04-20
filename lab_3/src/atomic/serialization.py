@@ -77,6 +77,7 @@ class Serialization:
 
         return pem_content
 
+
     @staticmethod
     def deserialize_rsa_private_key(
         pem_content: bytes,

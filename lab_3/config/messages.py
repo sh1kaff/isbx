@@ -14,5 +14,13 @@
 
 CRYPTO_ERRORS = {
     "decrypt_invalid_cast5": "Invalid CAST5 key to decrypt",
-    "decrypt_invalid_rsa": "Invalid RSA key to decrypt"
+    "decrypt_invalid_rsa": "Invalid RSA key to decrypt",
+    "cast5_key_len": "The key length must be between 40 and 128 bits inclusive",
+    "cast5_key_incr": "The key length should be in 8 bit increments"
+}
+
+
+COMMON_ERRORS = {
+    "not_file": "Object {path} is not file!",
+    "file_not_json": "File {path} is not JSON!"
 }
