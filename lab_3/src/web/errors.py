@@ -1,4 +1,4 @@
-﻿from aiohttp import web
+from aiohttp import web
 from src.web.wrappers import error_wrap
 
 from src.atomic.serialization import Serialization

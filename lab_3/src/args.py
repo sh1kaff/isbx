@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 
 from config.messages import (
     COMMON_ERRORS,

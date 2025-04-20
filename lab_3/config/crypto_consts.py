@@ -1,4 +1,4 @@
-﻿from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives import padding
 import cryptography.hazmat.primitives.asymmetric.padding as asymm_padding
 from cryptography.hazmat.primitives import hashes
 

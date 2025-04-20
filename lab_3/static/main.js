@@ -1,4 +1,4 @@
-﻿let ALLOWEDKEYS = [
+let ALLOWEDKEYS = [
     "rsa_public_key",
     "rsa_private_key",
     "cast5_encrypted_key"

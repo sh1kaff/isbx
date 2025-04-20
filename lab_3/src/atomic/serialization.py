@@ -1,4 +1,4 @@
-﻿import base64
+import base64
 
 from cryptography.hazmat.primitives.asymmetric.rsa import (
     RSAPrivateKey,

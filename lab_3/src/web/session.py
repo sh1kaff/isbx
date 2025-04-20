@@ -1,4 +1,4 @@
-﻿from aiohttp_session import setup, Session
+from aiohttp_session import setup, Session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from aiohttp.web import Application
 

@@ -1,4 +1,4 @@
-﻿from aiohttp import web
+from aiohttp import web
 import os
 
 

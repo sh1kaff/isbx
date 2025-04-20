@@ -1,4 +1,4 @@
-﻿import os
+import os
 from config.paths import DEFAULT_DIR
 
 

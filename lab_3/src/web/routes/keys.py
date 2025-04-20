@@ -1,4 +1,4 @@
-﻿from aiohttp import web
+from aiohttp import web
 from aiohttp_session import get_session
 
 from src.atomic.rsa import RSA

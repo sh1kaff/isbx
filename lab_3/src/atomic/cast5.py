@@ -1,4 +1,4 @@
-﻿from secrets import token_bytes
+from secrets import token_bytes
 from cryptography.hazmat.decrepit.ciphers import algorithms
 from cryptography.hazmat.primitives.ciphers import Cipher, modes
 

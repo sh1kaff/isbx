@@ -1,4 +1,4 @@
-﻿from cryptography.hazmat.primitives.asymmetric.rsa import (
+from cryptography.hazmat.primitives.asymmetric.rsa import (
     RSAPublicKey,
     RSAPrivateKey
 )

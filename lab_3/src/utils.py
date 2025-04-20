@@ -1,4 +1,4 @@
-﻿import aiofiles
+import aiofiles
 import json
 import os
 
@@ -17,9 +17,6 @@ class AsyncIOUtils:
         Raises:
             ValueError: Not the file
         """
-        if not os.path.isfile(filepath):
-            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath))
-
         async with aiofiles.open(filepath, "wb") as file:
             await file.write(content)
 
@@ -36,9 +33,6 @@ class AsyncIOUtils:
         Returns:
             bytes: File content
         """
-        if not os.path.isfile(filepath):
-            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath))
-
         async with aiofiles.open(filepath, "rb") as file:
             return await file.read()
 
@@ -82,9 +76,6 @@ class IOUtils:
         Raises:
             ValueError: Not the file
         """
-        if not os.path.isfile(filepath):
-            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath))
-
         with open(filepath, "wb") as file:
             file.write(content)
 
@@ -101,9 +92,6 @@ class IOUtils:
         Returns:
             bytes: File content
         """
-        if not os.path.isfile(filepath):
-            raise ValueError(COMMON_ERRORS["not_file"].format(path=filepath))
-
         with open(filepath, "rb") as file:
             content = file.read()
 

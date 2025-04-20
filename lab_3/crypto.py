@@ -1,4 +1,4 @@
-﻿from src.atomic.hybrid import HybridCryptoSystem
+from src.atomic.hybrid import HybridCryptoSystem
 
 from src.args import Args
 from src.utils import IOUtils

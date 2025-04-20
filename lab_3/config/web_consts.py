@@ -1,4 +1,4 @@
-﻿ALLOWED_DOWNLOAD_KEYS = (
+ALLOWED_DOWNLOAD_KEYS = (
     "rsa_private_key",
     "rsa_public_key",
     "cast5_encrypted_key"
