@@ -25,6 +25,13 @@ def main():
             settings["rsa_public_key"],
             settings["cast5_encrypted_key"]
         )
+        print(
+            "Generating to",
+            settings["rsa_private_key"],
+            settings["rsa_public_key"],
+            settings["cast5_encrypted_key"],
+            sep="\n"
+        )
 
         return
 
@@ -41,13 +48,20 @@ def main():
             settings["input_file"],
             settings["encrypted_input_file"]
         )
+        print("Ecrypted to", settings["encrypted_input_file"])
         
     elif args.decrypt:
         hybrid.decrypt_content(
             settings["encrypted_input_file"],
             settings["decrypted_input_file"]
         )
+        print("Decrypted to", settings["decrypted_input_file"])
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exit")
+    except Exception as e:
+        print(f"Error: {str(e)}")
