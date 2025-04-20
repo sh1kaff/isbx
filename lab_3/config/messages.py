@@ -25,20 +25,20 @@ COMMON_ERRORS = {
     "not_file": "Object {path} is not file!",
     "file_not_json": "File {path} is not JSON!",
     "allowed_methods": "You can use only on of them: {methods}",
-    "necess_methods": "One of this settings are must to be!"
+    "unsupported_format": "Unsupported file format"
 }
 
 
 HELP = {
-    "generate": "",
-    "encrypt": "",
-    "decrypt": "",
-    "auto": "",
-    "cast5_keylen": ""
+    "generate": "Generate keys",
+    "encrypt": "Encrypt File",
+    "decrypt": "Decrypt File",
+    "auto": "Auto Mod (Use Default Settings)",
+    "cast5_keylen": "Len of CAST5 key"
 }
 
 
 DESC = {
-    "prog_name": "",
-    "prog_desc": ""
+    "prog_name": "DAMNED ENCRYPTOR",
+    "prog_desc": "G.E.D."
 }

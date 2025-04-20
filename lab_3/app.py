@@ -15,6 +15,11 @@ from config.web_consts import ALLOWED_DOWNLOAD_KEYS
 
 
 async def init_app() -> web.Application:
+    """Initializes the web application
+
+    Returns:
+        web.Application: Web Application
+    """
     app = web.Application(
         middlewares=[error_middleware]
     )

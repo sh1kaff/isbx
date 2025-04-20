@@ -21,6 +21,7 @@ routes = web.RouteTableDef()
 
 @routes.post("/generate")
 async def generate_handler(request: web.Request) -> web.Response:
+    """API route for generating keys"""
     data = await request.json()
 
     session = await get_session(request)
@@ -42,6 +43,7 @@ async def generate_handler(request: web.Request) -> web.Response:
 
 @routes.post("/{action:(encrypt|decrypt)}")
 async def encrypt_decrypt_handler(request: web.Request) -> web.Response:
+    """API route for encryption and decryption content"""
     post_data = await request.post()
     file = post_data.get("file")
 

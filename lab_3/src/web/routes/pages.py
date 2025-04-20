@@ -9,5 +9,6 @@ routes = web.RouteTableDef()
 @routes.get("/")
 @aiohttp_jinja2.template("index.html")
 async def home_handler(request: web.Request) -> dict:
+    """Index page"""
     session = await get_session(request)
     return {}

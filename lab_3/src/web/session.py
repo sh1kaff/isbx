@@ -12,6 +12,7 @@ from config.paths import TMP_DIR
 
 
 async def cleanup_tmp(app: Application):
+    """Auto cleanup tmp dir"""
     tmp_dir = app["tmp_dir"]
     if os.path.exists(tmp_dir):
         shutil.rmtree(tmp_dir)
@@ -23,6 +24,7 @@ async def cleanup_tmp(app: Application):
 
 
 def create_session_dir(session: Session):
+    """Creating session dir"""
     dir_name = secrets.token_hex(32)
 
     if session.get("dir_path") is not None:
@@ -38,12 +40,14 @@ def create_session_dir(session: Session):
 
 
 def create_session_key() -> fernet.Fernet:
+    """Creating session key"""
     fernet_key = fernet.Fernet.generate_key()
     
     return fernet.Fernet(fernet_key)
 
 
 def setup_session(app: Application):
+    """Setup session for app"""
     session_key = create_session_key()
 
     setup(

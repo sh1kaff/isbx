@@ -24,6 +24,7 @@ routes = web.RouteTableDef()
 
 @routes.get("/keys")
 async def keys_get_handler(request: web.Request) -> web.Response:
+    """API route for getting keys"""
     session = await get_session(request)
     session_dir = session.get("dir_path")
 
@@ -37,6 +38,7 @@ async def keys_get_handler(request: web.Request) -> web.Response:
 
 @routes.get("/keys/{key}")
 async def key_get_handler(request: web.Request) -> web.Response:
+    """API route for downloading specify key"""
     key = request.match_info.get("key", "")
 
     if key not in ALLOWED_DOWNLOAD_KEYS:
@@ -58,6 +60,7 @@ async def key_get_handler(request: web.Request) -> web.Response:
 
 @routes.post("/keys")
 async def keys_upload_handler(request: web.Request) -> web.Response:
+    """API route for uploading RSA private and CAST5 encrypted keys"""
     post_data = await request.post()
 
     rsa_file = post_data.get("rsa_private_key")

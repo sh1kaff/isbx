@@ -7,6 +7,7 @@ from config.paths import USER_SETTINGS_FILE
 
 
 def main():
+    """Entry Point To The CLI App"""
     args = Args.get_args()
 
     settings = {}

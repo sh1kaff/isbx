@@ -10,6 +10,15 @@ from config.messages import (
 class Args:
     @staticmethod
     def valid_args(args: argparse.Namespace):
+        """Checks CLI arguments
+
+        Args:
+            args (argparse.Namespace): Arguments
+
+        Raises:
+            ValueError: Unauthorized methods
+            ValueError: Methods required
+        """
         count = 0
         methods = ("generate", "encrypt", "decrypt")
 
@@ -27,6 +36,11 @@ class Args:
 
     @staticmethod
     def get_args() -> argparse.Namespace:
+        """Gets arguments from the input
+
+        Returns:
+            argparse.Namespace: Arguments namespace
+        """
         parser = argparse.ArgumentParser(
             prog=DESC["prog_name"],
             description=DESC["prog_desc"]

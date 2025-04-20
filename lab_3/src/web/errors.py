@@ -10,6 +10,7 @@ from config.web_consts import MAX_UPLOADED_SIZE
 
 @web.middleware
 async def error_middleware(request: web.Request, handler) -> web.Response:
+    """Error handling middleware"""
     try:
         response = await handler(request)
         return response
@@ -18,6 +19,7 @@ async def error_middleware(request: web.Request, handler) -> web.Response:
 
 
 def valid_rsa_cast5_keys(rsa_key_ser: bytes, cast5_key_ser: bytes):
+    """CAST5 and RSA private key validation"""
     try:
         rsa_private_key = Serialization.deserialize_rsa_private_key(
             rsa_key_ser
