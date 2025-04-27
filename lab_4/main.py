@@ -1,9 +1,14 @@
-﻿from src.hash_cracker import crack_hash_with_mp
+﻿import logging
+from src.hash_cracker import crack_hash_with_mp
 
 from config.config import USER_INFO
 
 
 def main():
+    logging.basicConfig(
+        level=logging.INFO
+    )
+
     user_info_bin = USER_INFO["bin"]
     for bin in user_info_bin:
         result = crack_hash_with_mp(
@@ -11,11 +16,9 @@ def main():
             USER_INFO["last_digits"],
             bin
         )
+
         if result:
-            print(f"BIN: {bin} [+]: {result}")
             break
-        else:
-            print(f"BIN: {bin} [-]")
 
 if __name__ == "__main__":
     main()

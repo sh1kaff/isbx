@@ -1,4 +1,5 @@
-﻿import multiprocessing as mp
+﻿import logging
+import multiprocessing as mp
 from hashlib import blake2s
 
 
@@ -62,14 +63,18 @@ def crack_hash_with_mp(
     incr = limit // cores
     result = None
 
-    args_iter = (
+    args_gen = (
         (hash, last_digits, bin, (start := incr * core_idx), start + incr - 1)
         for core_idx in range(0, cores)
     )
-
     with mp.Pool(processes=cores) as p:
-        for res in p.map(worker, args_iter):
+        logging.info(f"Start multiprocessing. Cores: {cores}")
+        logging.info(f"BIN: {bin}; Hash: {hash}; last_digits: {last_digits}")
+
+        for res in p.map(worker, args_gen):
             if res:
+                logging.info(f"Result found! Card: {res}")
+
                 p.terminate()
                 result = res
                 break
