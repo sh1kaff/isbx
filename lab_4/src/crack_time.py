@@ -2,20 +2,29 @@
 import psutil
 import multiprocessing as mp
 
+from typing import Any
+
 from src.hash_cracker import crack_hash_with_mp
 
 
+def func_time(func, *args, **kwargs) -> tuple[float, Any]:
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    return (time.time() - start_time, result)
+
+
 def get_crack_time(
-    hash: str,
+    target_hash: str,
     last_digits: str,
-    bin: str
-) -> int:
+    bin_code: str
+):
     real_cores = psutil.cpu_count(logical=False)
 
     for cores in range(1, int(real_cores * 1.5) + 1):
-        start_time = time.time()
-        crack_hash_with_mp(hash, last_digits, bin, cores)
-        print(f"Time: {time.time() - start_time}")
+        crack_time, result = func_time(
+            crack_hash_with_mp, target_hash, last_digits, bin_code, cores
+        )
+        
 
 
 if __name__ == "__main__":
