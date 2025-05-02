@@ -59,9 +59,6 @@ def crack_hash_with_mp(
     bin_code: str,
     cores: int = mp.cpu_count()
 ) -> str | None:
-    if cores > mp.cpu_count():
-        raise ValueError("Many cores")
-
     limit = get_limits(bin_code, last_digits)[1]
     incr = limit // cores
     result = None
@@ -73,7 +70,7 @@ def crack_hash_with_mp(
 
     with mp.Pool(processes=cores) as pool:
         logging.info(f"Start multiprocessing. Cores: {cores}")
-        logging.info(f"BIN: {bin_code}; Hash: {hash}; last_digits: {last_digits}")
+        logging.info(f"BIN: {bin_code}; Hash: {target_hash}; last_digits: {last_digits}")
 
         for res in pool.imap_unordered(worker, args_gen):
             if res:
