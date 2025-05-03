@@ -29,7 +29,3 @@ def card_is_correct(
     return control == last
 
 
-if __name__ == "__main__":
-    print(card_is_correct("2202202355549834"))
-    # num = 853
-    # print(list(enumerate(map(int, reversed(str(num))))))
