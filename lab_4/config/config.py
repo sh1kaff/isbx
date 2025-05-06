@@ -1,3 +1,3 @@
-﻿DEFAULT_HASH = "blake2s"
+DEFAULT_HASH = "blake2s"
 
 # answer : 5479054156572301

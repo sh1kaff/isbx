@@ -1,4 +1,4 @@
-﻿import psutil
+import psutil
 
 from typing import Any, Generator
 

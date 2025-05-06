@@ -1,4 +1,4 @@
-﻿from aiogram import Router
+from aiogram import Router
 from aiogram.types import Message, BufferedInputFile
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext

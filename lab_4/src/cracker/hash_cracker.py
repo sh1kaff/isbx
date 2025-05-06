@@ -1,4 +1,4 @@
-﻿import logging
+import logging
 import multiprocessing as mp
 
 from src.cracker.utils import get_hash_func
