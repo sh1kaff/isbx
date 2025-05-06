@@ -1,6 +1,20 @@
 ﻿import logging
 import multiprocessing as mp
-from hashlib import blake2s
+import hashlib
+
+
+def is_correct_hash_alg(hash_alg: str) -> bool:
+    if hash_alg in hashlib.algorithms_available:
+        return True
+
+    return False
+
+
+def get_hash_func(hash_alg: str):
+    if not is_correct_hash_alg(hash_alg):
+        raise ValueError(f"Incorrect hash {hash_alg}!")
+    
+    return getattr(hashlib, hash_alg)
 
 
 def get_limits(
@@ -15,14 +29,16 @@ def get_limits(
 
 def card_is_hash(
     card: str,
-    target_hash: str
+    target_hash: str,
+    hash_alg: str = "blake2s",
 ) -> bool:
+    hash_func = get_hash_func(hash_alg)
     if len(card) != 16:
         raise ValueError("Invalid card")
 
     card_bytes = bytes(card, encoding="utf-8")
 
-    return blake2s(card_bytes).hexdigest() == target_hash
+    return hash_func(card_bytes).hexdigest() == target_hash
 
 
 def brute_hash(
@@ -30,7 +46,8 @@ def brute_hash(
     last_digits: str,
     bin_code: str,
     start: int = 0,
-    end: int | None = None
+    end: int | None = None,
+    hash_alg: str = "blake2s",
 ) -> str | None:
     limit_len, limit = get_limits(bin_code, last_digits)
 
@@ -42,29 +59,30 @@ def brute_hash(
 
     for digits in range(start, end + 1):
         card = bin_code + str(digits).zfill(limit_len) + last_digits
-        if card_is_hash(card, target_hash):
+        if card_is_hash(card, target_hash, hash_alg):
             return card
 
     return None 
 
 
 def worker(args) -> str | None:
-    target_hash, last_digits, bin_code, start, end = args
-    return brute_hash(target_hash, last_digits, bin_code, start, end)
+    target_hash, last_digits, bin_code, start, end, hash_alg = args
+    return brute_hash(target_hash, last_digits, bin_code, start, end, hash_alg)
 
 
 def crack_hash_with_mp(
     target_hash: str,
     last_digits: str,
     bin_code: str,
-    cores: int = mp.cpu_count()
+    hash_alg: str = "blake2s",
+    cores: int = mp.cpu_count(),
 ) -> str | None:
     limit = get_limits(bin_code, last_digits)[1]
     incr = limit // cores
     result = None
 
     args_gen = (
-        (target_hash, last_digits, bin_code, (start := incr * core_idx), start + incr - 1)
+        (target_hash, last_digits, bin_code, (start := incr * core_idx), start + incr - 1, hash_alg)
         for core_idx in range(0, cores)
     )
 

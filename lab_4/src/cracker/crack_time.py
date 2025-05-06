@@ -15,16 +15,17 @@ def func_time(func, *args, **kwargs) -> tuple[float, Any]:
 def get_crack_stats(
     target_hash: str,
     last_digits: str,
-    bin_code: str
-) -> Generator[dict]:
+    bin_code: str,
+    hash_alg: str = "blake2s",
+) -> Generator[dict[str, Any], Any, Any]:
     real_cores = psutil.cpu_count(logical=False)
 
     for cores in range(1, int(real_cores * 1.5) + 1):
         crack_time, result = func_time(
-            crack_hash_with_mp, target_hash, last_digits, bin_code, cores
+            crack_hash_with_mp, target_hash, last_digits, bin_code, hash_alg, cores,
         )
         yield {
-            "x": cores,
-            "y": crack_time,
+            "cores": cores,
+            "crack_time": crack_time,
             "result": result
         }
