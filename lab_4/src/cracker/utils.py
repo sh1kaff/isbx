@@ -47,7 +47,7 @@ def luhn(number: int) -> int:
     return control
 
 
-def card_is_correct(
+def card_correct(
     card: str
 ) -> bool:
     if len(card) != 16:
@@ -59,10 +59,10 @@ def card_is_correct(
     return True
 
 
-def card_is_luhn_correct(
+def card_luhn_correct(
     card: str
 ) -> bool:
-    if not card_is_correct(card):
+    if not card_correct(card):
         return False
 
     last = int(card[-1])
@@ -72,19 +72,19 @@ def card_is_luhn_correct(
 
 
 def serialize_card(card: str) -> str:
-    if not card_is_correct(card):
+    if not card_correct(card):
         raise ValueError("Card invalid")
     
     card_info = {
         "bin_code": card[:6],
         "card_number": card[6:12],
-        "last_digits": card[12:],
+        "last": card[12:],
     }
 
     return json.dumps(card_info)
 
 
-def is_correct_hash_alg(hash_alg: str) -> bool:
+def hash_alg_correct(hash_alg: str) -> bool:
     if hash_alg in hashlib.algorithms_available:
         return True
 
@@ -92,7 +92,7 @@ def is_correct_hash_alg(hash_alg: str) -> bool:
 
 
 def get_hash_func(hash_alg: str):
-    if not is_correct_hash_alg(hash_alg):
+    if not hash_alg_correct(hash_alg):
         raise ValueError(f"Incorrect hash {hash_alg}!")
     
     return getattr(hashlib, hash_alg)
