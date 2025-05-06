@@ -1,6 +1,8 @@
 ﻿import matplotlib.pyplot as plt
 from io import BytesIO
 import json
+import hashlib
+import time
 
 
 def visual_crack_stats(
@@ -80,3 +82,23 @@ def serialize_card(card: str) -> str:
     }
 
     return json.dumps(card_info)
+
+
+def is_correct_hash_alg(hash_alg: str) -> bool:
+    if hash_alg in hashlib.algorithms_available:
+        return True
+
+    return False
+
+
+def get_hash_func(hash_alg: str):
+    if not is_correct_hash_alg(hash_alg):
+        raise ValueError(f"Incorrect hash {hash_alg}!")
+    
+    return getattr(hashlib, hash_alg)
+
+
+def func_time(func, *args, **kwargs) -> tuple[float, str | None]:
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    return (time.time() - start_time, result)

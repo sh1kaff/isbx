@@ -9,8 +9,7 @@ import asyncio
 from src.bot.states import CrackState
 from src.cracker.hash_cracker import crack_hash_with_mp
 from src.cracker.crack_time import get_crack_stats
-from src.cracker.stats import visual_crack_stats
-from src.cracker.algorithm import card_is_luhn_correct
+from src.cracker.utils import visual_crack_stats, card_is_luhn_correct
 
 
 router = Router()

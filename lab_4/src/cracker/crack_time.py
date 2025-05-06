@@ -1,15 +1,9 @@
-﻿import time
-import psutil
+﻿import psutil
 
 from typing import Any, Generator
 
 from src.cracker.hash_cracker import crack_hash_with_mp
-
-
-def func_time(func, *args, **kwargs) -> tuple[float, Any]:
-    start_time = time.time()
-    result = func(*args, **kwargs)
-    return (time.time() - start_time, result)
+from src.cracker.utils import func_time
 
 
 def get_crack_stats(

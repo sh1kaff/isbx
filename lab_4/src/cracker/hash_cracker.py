@@ -1,20 +1,7 @@
 ﻿import logging
 import multiprocessing as mp
-import hashlib
 
-
-def is_correct_hash_alg(hash_alg: str) -> bool:
-    if hash_alg in hashlib.algorithms_available:
-        return True
-
-    return False
-
-
-def get_hash_func(hash_alg: str):
-    if not is_correct_hash_alg(hash_alg):
-        raise ValueError(f"Incorrect hash {hash_alg}!")
-    
-    return getattr(hashlib, hash_alg)
+from src.cracker.utils import get_hash_func
 
 
 def get_limits(
