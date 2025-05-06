@@ -1,5 +1,6 @@
 from aiogram import Router
 from aiogram.types import Message, BufferedInputFile
+from aiogram.enums import ParseMode
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.chat_action import ChatActionSender
@@ -15,9 +16,12 @@ from src.cracker.utils import visual_crack_stats, card_luhn_correct
 router = Router()
 
 
-@router.message(Command("start"))
+@router.message(Command(commands=["start", "help", "menu", "bebra"]))
 async def cmd_start(message: Message):
-    await message.answer("Select command: ...")
+    """Handler for "start" commands"""
+    await message.answer(
+        "Commands:\n/crack\n/crack_time\n/luhn",
+    )
 
 
 @router.message(
@@ -28,18 +32,25 @@ async def cmd_crack(
     message: Message,
     state: FSMContext,
 ):
+    """Handler for /crack command"""
     args = message.text.split(" ", maxsplit=4)[1:]
     if len(args) != 4:
-        await message.answer("Right command: `/crack hash_alg target_hash bin_code last`")
+        await message.answer(
+            "Right command: `/crack hash_alg target_hash bin_code last`",
+            parse_mode=ParseMode.MARKDOWN_V2,
+        )
         return
 
     hash_alg, target_hash, bin_code, last = args
-    
+
     await state.set_state(CrackState.working)
     await message.answer("Processing...")
-    
+
     try:
-        async with ChatActionSender.typing(bot=message.bot, chat_id=message.chat.id):
+        async with ChatActionSender.typing(
+            bot=message.bot,
+            chat_id=message.chat.id
+        ):
             crack_result = await asyncio.to_thread(
                 crack_hash_with_mp,
                 target_hash,
@@ -53,7 +64,10 @@ async def cmd_crack(
         if crack_result is None:
             await message.answer("Sorry, no result :(")
         else:
-            await message.answer(f"Cracked! Result: {crack_result}")
+            await message.answer(
+                f"Cracked\\! Result: `{crack_result}`",
+                parse_mode=ParseMode.MARKDOWN_V2,
+            )
 
     await state.clear()
 
@@ -66,18 +80,25 @@ async def cmd_crack_time(
     message: Message,
     state: FSMContext,
 ):
+    """Handler for /crack_time command"""
     args = message.text.split(" ", maxsplit=4)[1:]
     if len(args) != 4:
-        await message.answer("Right command: `/crack_time hash_alg target_hash bin_code last`")
+        await message.answer(
+            "Right command: `/crack_time hash_alg target_hash bin_code last`",
+            parse_mode=ParseMode.MARKDOWN_V2,
+        )
         return
 
     hash_alg, target_hash, bin_code, last = args
-    
+
     await state.set_state(CrackState.working)
     await message.answer("Processing...")
-    
+
     try:
-        async with ChatActionSender.typing(bot=message.bot, chat_id=message.chat.id):
+        async with ChatActionSender.typing(
+            bot=message.bot,
+            chat_id=message.chat.id
+        ):
             stats_list = await asyncio.to_thread(
                 list,
                 get_crack_stats(target_hash, last, bin_code, hash_alg)
@@ -92,7 +113,10 @@ async def cmd_crack_time(
             )
 
             await message.answer_photo(
-                photo=BufferedInputFile(file=buffer.getvalue(), filename="stats.jpg"),
+                photo=BufferedInputFile(
+                    file=buffer.getvalue(),
+                    filename="stats.jpg"
+                ),
                 caption=f"Stats for {hash_alg} hash:"
             )
     except Exception as e:
@@ -108,17 +132,19 @@ async def cmd_crack_time(
 async def cmd_luhn(
     message: Message,
 ):
+    """Handler for /luhn command"""
     args = message.text.split(" ", maxsplit=1)
     if len(args) != 2:
         await message.answer(
             "Right command: `/luhn card`",
+            parse_mode=ParseMode.MARKDOWN_V2,
         )
         return
 
     card = args[-1]
 
-    correct = card_luhn_correct(card)
+    luhn_correct = card_luhn_correct(card)
 
     await message.answer(
-        f"Card {card} is {'' if correct else 'not'} correct."
+        f"Card {card} {'is' if luhn_correct else 'isn\'t'} correct."
     )

@@ -13,6 +13,17 @@ def get_crack_stats(
     bin_code: str,
     hash_alg: str = DEFAULT_HASH,
 ) -> Generator[dict[str, Any], Any, Any]:
+    """Computing cracking statistics, or full pass statistics across all map variants. 
+
+    Args:
+        target_hash (str): Cracking hash
+        last (str): Last 4 card digits
+        bin_code (str): Card BIN
+        hash_alg (str, optional): Hashing algorithm. Defaults to DEFAULT_HASH.
+
+    Yields:
+        Generator[dict[str, Any], Any, Any]: Stats dict
+    """
     real_cores = psutil.cpu_count(logical=False)
 
     for cores in range(1, int(real_cores * 1.5) + 1):

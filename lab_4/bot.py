@@ -11,7 +11,7 @@ from src.config_reader import config
 
 async def main():
     logging.basicConfig(
-        level=logging.INFO  
+        level=logging.INFO
     )
 
     bot = Bot(

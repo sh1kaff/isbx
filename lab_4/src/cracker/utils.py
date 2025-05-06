@@ -6,10 +6,22 @@ import time
 
 
 def visual_crack_stats(
-        cores_stats: list[int],
-        crack_time_stats: list[float]
-    ) -> BytesIO:
-    plt.title("Dependence of hash cracking time on the number of cores involved")
+    cores_stats: list[int],
+    crack_time_stats: list[float]
+) -> BytesIO:
+    """Returns an image of the mathematical graph of hash cracking 
+
+    Args:
+        cores_stats (list[int]): core statistics
+        crack_time_stats (list[float]): crack time statistics
+
+    Returns:
+        BytesIO: Tmp image object
+    """
+    plt.title(
+        "Dependence of hash cracking "
+        "time on the number of cores involved"
+    )
     plt.xlabel("Cores")
     plt.ylabel("Crack Time")
 
@@ -19,7 +31,7 @@ def visual_crack_stats(
     plt.xticks(range(cores_stats[0], cores_stats[-1] + 1, 1))
     plt.plot(cores_stats, crack_time_stats)
     plt.plot(idx + 1, minimum, marker="o")
-    
+
     buffer = BytesIO()
     plt.savefig(buffer, format="jpg")
     plt.clf()
@@ -29,6 +41,7 @@ def visual_crack_stats(
 
 
 def luhn(number: int) -> int:
+    """Luhn algorithm"""
     rev_dig = map(int, reversed(str(number)))
 
     summ = 0
@@ -50,9 +63,11 @@ def luhn(number: int) -> int:
 def card_correct(
     card: str
 ) -> bool:
+    """Checks if the map is valid
+    (16 characters long and contains only numbers)"""
     if len(card) != 16:
         return False
-    
+
     if not card.isdigit():
         return False
 
@@ -62,6 +77,8 @@ def card_correct(
 def card_luhn_correct(
     card: str
 ) -> bool:
+    """Checks whether the map is correct
+    (using the Luhn algorithm)"""
     if not card_correct(card):
         return False
 
@@ -72,9 +89,11 @@ def card_luhn_correct(
 
 
 def serialize_card(card: str) -> str:
+    """Serializes the bank card into an
+    easy-to-transmit format"""
     if not card_correct(card):
         raise ValueError("Card invalid")
-    
+
     card_info = {
         "bin_code": card[:6],
         "card_number": card[6:12],
@@ -85,6 +104,7 @@ def serialize_card(card: str) -> str:
 
 
 def hash_alg_correct(hash_alg: str) -> bool:
+    """Checks if the hash is valid in hashlib"""
     if hash_alg in hashlib.algorithms_available:
         return True
 
@@ -92,13 +112,16 @@ def hash_alg_correct(hash_alg: str) -> bool:
 
 
 def get_hash_func(hash_alg: str):
+    """Gets a hash function by its name"""
     if not hash_alg_correct(hash_alg):
         raise ValueError(f"Incorrect hash {hash_alg}!")
-    
+
     return getattr(hashlib, hash_alg)
 
 
 def func_time(func, *args, **kwargs) -> tuple[float, str | None]:
+    """Calculates the execution time of
+    the function and its result"""
     start_time = time.time()
     result = func(*args, **kwargs)
     return (time.time() - start_time, result)
