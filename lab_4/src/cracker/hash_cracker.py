@@ -10,7 +10,7 @@ LIMIT_LEN = 6
 """Number of unknown digits in the card"""
 LIMIT = pow(10, LIMIT_LEN)
 """The maximum number minus 1 that can be
-on an unknown location in the card"""
+on an unknown location in the card """
 
 
 def _valid_credentials(
